@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "853431687087",
+    "project_id": "crossfitapp-39c5b",
+    "storage_bucket": "crossfitapp-39c5b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853431687087:android:9cb99e5d8a38384247015a",
+        "android_client_info": {
+          "package_name": "com.jeantituana2024.tesis"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQPhCdEz2y1tfsTHuZYmmbcmzzuOKXjj4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Crossfit App</string>
+    <string name="new_user_signup">Nuevo Usuario? <b>Registrate</b></string>
+</resources>

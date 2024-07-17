@@ -4,9 +4,61 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">20%</item>
     </style>
+
+    <style name="styleRoundeCornersImageNav">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
     <style name="fullscreen" parent="@android:style/Theme.NoTitleBar" />
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <!-- Customize your theme here -->
+        <item name="colorPrimaryVariant">@color/red01</item>
+        <item name="colorPrimary">@color/black02</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/black02</item>
+        <item name="colorSecondaryVariant">@color/black</item>
+        <item name="colorOnSecondary">@color/gray01</item>
+
+        <item name="android:fontFamily">@font/poppins_italic</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
     </style>
+
+    <!-- Estilo para campos deshabilitados -->
+    <style name="DisabledEditTextStyle">
+        <item name="android:textColor">@color/gray02</item> <!-- Color del texto -->
+        <item name="android:background">@drawable/shape_edittext_disabled</item> <!-- Fondo del campo -->
+    </style>
+
+    <!-- Define una forma que redondea solo las esquinas inferiores -->
+    <style name="RoundedBottomCorners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomRight">30dp</item>
+        <item name="cornerSizeBottomLeft">30dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+    </style>
+
+    <style name="ItalicTitle">
+        <item name="android:textColor">@color/black02</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="ItalicText">
+        <item name="android:textColor">@color/gray02</item>
+        <item name="android:textSize">14sp</item>
+        <!-- Agrega otros atributos de texto según sea necesario -->
+    </style>
+
+    <style name="ItalicSubtitle">
+        <item name="android:textColor">@color/black02</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <!-- Agrega otros atributos de texto según sea necesario -->
+    </style>
+
 </resources>

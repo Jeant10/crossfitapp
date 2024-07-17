@@ -7,34 +7,38 @@
     android:background="@drawable/back01"
     tools:context=".auth.LoginActivity">
 
-    <RelativeLayout
-        android:id="@+id/toolbar01"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/shapeableImageView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@drawable/shape_toolbar01">
+        android:layout_height="240dp"
+        android:src="@drawable/back03"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/RoundedBottomCorners">
 
-        <ImageView
-            android:id="@+id/iconIv"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/logocrossfit">
+    </com.google.android.material.imageview.ShapeableImageView>
 
-        </ImageView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/iconIv"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="Ingresar"
-            android:textColor="@color/white"
-            android:fontFamily="sans-serif-condensed"
-            android:textSize="20sp"></TextView>
+    <ImageView
+        android:id="@+id/iconIv"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/logocrossfit">
 
-    </RelativeLayout>
+    </ImageView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iconIv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Ingresar"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="20sp"></TextView>
+
 
     <ScrollView
         android:layout_above="@id/noAccountTv"
@@ -62,7 +66,7 @@
                     android:background="@drawable/shape_edittext01"
                     android:drawableStart="@drawable/ic_email_gray"
                     android:drawablePadding="10dp"
-                    android:hint="Correo electrónico"
+                    android:hint="Email"
                     android:inputType="textEmailAddress"
                     android:padding="10dp"
                     android:textColor="@color/black"
@@ -120,6 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/forgotTv"
                 android:layout_marginTop="20dp"
+                android:padding="10dp"
                 android:background="@drawable/shape_button01"
                 android:text="Iniciar Sesion"
                 android:textColor="@color/white">

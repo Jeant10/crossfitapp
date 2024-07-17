@@ -1,5 +1,6 @@
 package com.jeantituana2024.tesis
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,87 +12,75 @@ import com.google.firebase.database.ValueEventListener
 import com.jeantituana2024.tesis.databinding.ActivityProfileBinding
 
 import android.text.format.DateFormat
+import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.jeantituana2024.tesis.admin.DashboardAdminActivity
+import com.jeantituana2024.tesis.storage.UserPreferences
 import java.util.Calendar
 import java.util.Locale
 
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProfileBinding
+    private val editProfileLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            loadUserProfile()
+        }
+    }
 
-    private lateinit var firebaseAuth: FirebaseAuth
-
+    private lateinit var userPreferences: UserPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        firebaseAuth = FirebaseAuth.getInstance()
+        userPreferences = UserPreferences(this)
 
-        loadUserInfo()
+        // Configurar el Toolbar desde el binding
+        setSupportActionBar(binding.toolbar)
 
-        binding.backBtn.setOnClickListener {
+        // Establecer el título del Toolbar
+        supportActionBar?.title = "Perfil"
+
+        // Habilitar el botón de regreso en el Toolbar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        loadUserProfile()
+
+        // Configurar el comportamiento del botón de regreso
+        binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
 
         binding.profileEditBtn.setOnClickListener {
-            startActivity(Intent(this,ProfileEditActivity::class.java))
+            val intent = Intent(this, ProfileEditActivity::class.java)
+            editProfileLauncher.launch(intent)
+
         }
     }
 
-    private fun loadUserInfo() {
-        val ref = FirebaseDatabase.getInstance().getReference("Users")
-
-        ref.child(firebaseAuth.uid!!)
-            .addValueEventListener(object : ValueEventListener{
-
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val email = "${snapshot.child("email").value}"
-                    val name = "${snapshot.child("name").value}"
-                    val profileImage = "${snapshot.child("profileImage").value}"
-                    val timestamp = "${snapshot.child("timestamp").value}"
-                    val uid = "${snapshot.child("uid").value}"
-                    val userType = "${snapshot.child("userType").value}"
-                    val state = "${snapshot.child("state").value}"
-
-                    val formattedDate = formatTimeStamp(timestamp.toLong())
-
-                    var stateInit="";
-                    if (state.equals("true")){
-                        stateInit="Activo"
-                    }
-
-                    binding.nameTv.text = name
-                    binding.emailTv.text = email
-                    binding.memberDateTv.text = formattedDate
-                    binding.accountTypeTv.text = userType
-                    binding.stateTv.text = stateInit
-
-                    //image
-
-                    try {
-                        Glide.with(this@ProfileActivity)
-                            .load(profileImage)
-                            .placeholder(R.drawable.ic_person_gray)
-                            .into(binding.profileTv)
-
-                    }catch (e:Exception){
-
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-            })
-
+    override fun onBackPressed() {
+        val resultIntent = Intent()
+        setResult(Activity.RESULT_OK, resultIntent)
+        super.onBackPressed()
     }
+    private fun loadUserProfile() {
+        val user = userPreferences.getUser()
 
-    private fun formatTimeStamp(timestamp: Long): String {
-        val cal = Calendar.getInstance(Locale.ENGLISH)
-        cal.timeInMillis = timestamp
+        user?.let {
+            binding.nameTv.text = it.name
+            binding.emailTv.text = it.email
+            binding.idTv.text = it.id
+            binding.accountTypeTv.text = it.role
 
-        return DateFormat.format("dd/MM/yyyy",cal).toString()
+            Glide.with(this)
+                .load(it.image)
+                .placeholder(R.drawable.ic_person_gray) // Placeholder image
+                .error(R.drawable.ic_person_gray) // Error image
+                .diskCacheStrategy(DiskCacheStrategy.ALL) // Caching strategy
+                .into(binding.profileTv)
+        }
     }
 }

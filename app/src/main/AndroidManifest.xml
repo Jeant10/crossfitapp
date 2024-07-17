@@ -2,21 +2,79 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
-        android:usesCleartextTraffic="true"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/logocrossfit"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/logocrossfit"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:usesCleartextTraffic"
         tools:targetApi="31">
+        <activity
+            android:name=".coach.DashboardCoachActivity"
+            android:exported="false" />
+        <activity
+            android:name=".kpis.MembersKpiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".kpis.EarningsMonthActivity"
+            android:exported="false" />
+        <activity
+            android:name=".kpis.EarningsAnualActivity"
+            android:exported="false" />
+        <activity
+            android:name=".kpis.AttendancesByGenderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".kpis.AttendancesDayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".kpis.AttendancesMonthActivity"
+            android:exported="false" />
+        <activity
+            android:name=".kpis.AttendancesAnualActivity"
+            android:exported="false" />
+        <activity
+            android:name=".kpis.EarningsByPlanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".payment.PayEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".payment.AddPayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".attendance.AddAttendanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".attendance.MemberAttendancesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.members.MemberEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.members.AddMemberActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.plans.PlanEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.plans.AddPlanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.users.UserEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.users.AddUserActivity"
+            android:exported="false" />
         <activity
             android:name=".ProfileEditActivity"
             android:exported="false" />
@@ -44,8 +102,7 @@
         <activity
             android:name=".SplashActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

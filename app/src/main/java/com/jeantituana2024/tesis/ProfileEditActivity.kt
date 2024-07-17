@@ -2,6 +2,7 @@ package com.jeantituana2024.tesis
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Intent
@@ -10,6 +11,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
+import retrofit2.Call
 import android.view.Menu
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -20,6 +23,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -27,19 +31,39 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.jeantituana2024.tesis.api.RetrofitClient
+import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.databinding.ActivityProfileEditBinding
+import com.jeantituana2024.tesis.models.EditProfileRequest
+import com.jeantituana2024.tesis.models.EditProfileResponse
+import com.jeantituana2024.tesis.models.EditProfileWithImageRequest
+import com.jeantituana2024.tesis.models.ErrorDetail
+import com.jeantituana2024.tesis.models.ErrorResponse
+import com.jeantituana2024.tesis.models.GenericResponse
+import com.jeantituana2024.tesis.models.SingleErrorResponse
+import com.jeantituana2024.tesis.models.UserLogin
+import com.jeantituana2024.tesis.storage.TokenPreferences
+import com.jeantituana2024.tesis.storage.UserPreferences
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfileEditActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityProfileEditBinding
 
-    private lateinit var firebaseAuth: FirebaseAuth
-
     private var imageUri: Uri?=null
 
     private lateinit var progressDialog: ProgressDialog
 
+    private lateinit var userPreferences: UserPreferences
+
+    private lateinit var tokenPreferences: TokenPreferences
+
     private val CAMERA_REQUEST_CODE = 0
+
+    private var userId = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,10 +74,24 @@ class ProfileEditActivity : AppCompatActivity() {
         progressDialog.setTitle("Espere porfavor")
         progressDialog.setCanceledOnTouchOutside(false)
 
-        firebaseAuth = FirebaseAuth.getInstance()
-        loadUserInfo()
+        userPreferences = UserPreferences(this)
+        tokenPreferences = TokenPreferences(this)
 
-        binding.backBtn.setOnClickListener {
+        loadUser()
+
+        // Configurar el Toolbar desde el binding
+        setSupportActionBar(binding.toolbar)
+
+        // Establecer el título del Toolbar
+        supportActionBar?.title = "Editar Perfil"
+
+        // Habilitar el botón de regreso en el Toolbar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+
+        // Configurar el comportamiento del botón de regreso
+        binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
 
@@ -66,18 +104,40 @@ class ProfileEditActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun loadUser() {
+        val user = userPreferences.getUser()
+        user?.let {
+
+            userId = it.id
+
+            binding.nameEt.setText(it.name)
+
+            //image
+
+            Glide.with(this)
+                .load(it.image)
+                .placeholder(R.drawable.ic_person_gray) // Placeholder image
+                .error(R.drawable.ic_person_gray) // Error image
+                .diskCacheStrategy(DiskCacheStrategy.ALL) // Caching strategy
+                .into(binding.profileTv)
+        }
+    }
+
+
     private var name = ""
+
     private fun validateData() {
 
         name = binding.nameEt.text.toString().trim()
 
         if(name.isEmpty()){
-            Toast.makeText(this,"Ingresa tu nombre...!", Toast.LENGTH_SHORT).show()
+            showToast("Ingresa tu nombre...!")
         }
         else{
 
             if(imageUri==null){
-                updateProfile("")
+                updateUser("")
             }
             else{
                 uploadImage()
@@ -85,11 +145,124 @@ class ProfileEditActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateUser(image: String) {
+
+        progressDialog.setMessage("Actualizando Perfil...")
+        progressDialog.show()
+
+        val token = tokenPreferences.getToken()
+        val updateRequest: Any // Declarar como Any o una interfaz común
+
+        val call = when {
+            imageUri != null -> {
+                updateRequest = EditProfileWithImageRequest(name, image)
+                RetrofitClient.instance.editProfileWithImage("Bearer $token", updateRequest as EditProfileWithImageRequest)
+            }
+            else -> {
+
+                updateRequest = EditProfileRequest(name)
+                RetrofitClient.instance.editProfile("Bearer $token", updateRequest as EditProfileRequest)
+            }
+        }
+
+        call.enqueue(object: Callback<EditProfileResponse>{
+            override fun onResponse(call: Call<EditProfileResponse>, response: Response<EditProfileResponse>) {
+
+                if (response.isSuccessful) {
+
+                    progressDialog.dismiss()
+                    val updateResponse = response.body()
+
+                    if (updateResponse?.success != null) {
+                        showToast("Perfil Actualizado")
+                        userPreferences.saveUser(updateResponse.user)
+                        setResult(Activity.RESULT_OK)
+                    } else {
+                        showToast("Error desconocido")
+                    }
+
+                } else {
+
+                    response.errorBody()?.let { errorBody ->
+                        try {
+                            progressDialog.dismiss()
+                            val gson = Gson()
+                            val errorResponseType = object : TypeToken<ErrorResponse>() {}.type
+                            val errorResponse: ErrorResponse? = gson.fromJson(errorBody.charStream(), errorResponseType)
+
+                            if (errorResponse?.details != null && errorResponse.details.isNotEmpty()) {
+                                handleValidationErrors(errorResponse.details)
+                            } else {
+                                errorResponse?.let {
+                                    when (it.error) {
+                                        "Invalid token" -> {
+                                            showSessionExpiredAlert()
+                                        }
+                                        else -> {
+                                            showToast("Error: ${it.error}")
+                                        }
+                                    }
+                                }
+                            }
+
+                        } catch (e: Exception) {
+                            progressDialog.dismiss()
+                            e.printStackTrace()
+                            showToast("Error al procesar la respuesta del servidor.")
+
+                        }
+                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<EditProfileResponse>, t: Throwable) {
+                progressDialog.dismiss()
+                showToast("Fallido al actualizar Perfil debido a: ${t.message}")
+            }
+
+        })
+    }
+
+
+    private fun handleValidationErrors(errors: List<ErrorDetail>) {
+
+        val errorMessages = errors.joinToString(separator = "\n") { error ->
+            when (error.path[0]) {
+                "image" -> "${error.message}"
+                "name" -> "${error.message}"
+                else -> "${error.path[0]}: ${error.message}"
+            }
+        }
+        showToast(errorMessages)
+    }
+
+    // Función para mostrar una alerta de sesión expirada y redirigir al LoginActivity
+    private fun showSessionExpiredAlert() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Sesión Expirada")
+        builder.setMessage("Vuelve a iniciar sesión")
+        builder.setPositiveButton("Aceptar") { dialog, _ ->
+            dialog.dismiss() // Cerrar el diálogo
+            // Redirigir a LoginActivity
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+        builder.setCancelable(false) // Prevenir el cierre del diálogo usando el botón de atrás
+        builder.show()
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
+    }
+
     private fun uploadImage() {
+
         progressDialog.setMessage("Subiendo imagen de perfil")
         progressDialog.show()
 
-        val filePathAndName = "ProfileImages/"+firebaseAuth.uid
+        val filePathAndName = "ProfileImages/$userId"
 
         val reference = FirebaseStorage.getInstance().getReference(filePathAndName)
         reference.putFile(imageUri!!)
@@ -98,34 +271,11 @@ class ProfileEditActivity : AppCompatActivity() {
                 val uriTask: Task<Uri> = taskSnapshot.storage.downloadUrl
                 while (!uriTask.isSuccessful);
                 val uploadedImageUrl = "${uriTask.result}"
-                updateProfile(uploadedImageUrl)
+                updateUser(uploadedImageUrl)
             }
             .addOnFailureListener{e->
                 progressDialog.dismiss()
                 Toast.makeText(this,"Fallido al subir la imagen debido a ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    private fun updateProfile(uploadedImageUrl: String) {
-        progressDialog.setMessage("Actualizando perfil")
-
-        val hashmap: HashMap<String,Any> = HashMap()
-        hashmap["name"] = "${name}"
-        if(imageUri != null){
-            hashmap["profileImage"] = uploadedImageUrl
-        }
-
-        val reference = FirebaseDatabase.getInstance().getReference("Users")
-        reference.child(firebaseAuth.uid!!)
-            .updateChildren(hashmap)
-            .addOnSuccessListener {
-                progressDialog.dismiss()
-                Toast.makeText(this,"Perfil actualizado", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e->
-                progressDialog.dismiss()
-                Toast.makeText(this,"Fallido al actualizar perfil debido a ${e.message}", Toast.LENGTH_SHORT).show()
-
             }
     }
 
@@ -173,7 +323,7 @@ class ProfileEditActivity : AppCompatActivity() {
             if(result.resultCode == Activity.RESULT_OK){
                 //val data = result.data
                 //imageUri = data!!.data
-
+                Log.d("image","${imageUri}")
                 binding.profileTv.setImageURI(imageUri)
             }else{
                 Toast.makeText(this,"Cancelado", Toast.LENGTH_SHORT).show()
@@ -232,7 +382,7 @@ class ProfileEditActivity : AppCompatActivity() {
             if(result.resultCode == Activity.RESULT_OK){
                 val data = result.data
                 imageUri = data!!.data
-
+                Log.d("image","${imageUri}")
                 binding.profileTv.setImageURI(imageUri)
 
             }else{
@@ -241,36 +391,4 @@ class ProfileEditActivity : AppCompatActivity() {
         }
     )
 
-    private fun loadUserInfo() {
-        val ref = FirebaseDatabase.getInstance().getReference("Users")
-
-        ref.child(firebaseAuth.uid!!)
-            .addValueEventListener(object : ValueEventListener {
-
-                override fun onDataChange(snapshot: DataSnapshot) {
-
-                    val name = "${snapshot.child("name").value}"
-                    val profileImage = "${snapshot.child("profileImage").value}"
-
-                    binding.nameEt.setText(name)
-
-                    //image
-
-                    try {
-                        Glide.with(this@ProfileEditActivity)
-                            .load(profileImage)
-                            .placeholder(R.drawable.ic_person_gray)
-                            .into(binding.profileTv)
-
-                    }catch (e:Exception){
-
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-
-                }
-
-            })
-    }
 }

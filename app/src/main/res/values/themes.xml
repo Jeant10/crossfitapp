@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Tesis" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.BottomAndDrawerNavigation" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimaryVariant">@color/red01</item>
+        <item name="colorPrimary">@color/black02</item>
+        <item name="android:fontFamily">@font/poppins_italic</item>
+    </style>
+
+
 </resources>

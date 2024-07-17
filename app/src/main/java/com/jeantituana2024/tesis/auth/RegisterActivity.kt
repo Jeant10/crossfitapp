@@ -4,33 +4,33 @@ import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Patterns
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.jeantituana2024.tesis.R
 import com.jeantituana2024.tesis.api.RetrofitClient
-import com.jeantituana2024.tesis.client.DashboardClientActivity
 import com.jeantituana2024.tesis.databinding.ActivityRegisterBinding
-import com.jeantituana2024.tesis.models.DefaultResponse
+import com.jeantituana2024.tesis.models.RegisterRequest
+import com.jeantituana2024.tesis.models.ErrorResponse
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.jeantituana2024.tesis.models.ErrorDetail
+import com.jeantituana2024.tesis.models.RegisterResponse
+import androidx.annotation.VisibleForTesting
 
+// Marca el método con @VisibleForTesting para que sea accesible solo para pruebas
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
 
-    private lateinit var firebaseAuth: FirebaseAuth
-
-    private lateinit var progressDialog: ProgressDialog
+    @VisibleForTesting
+    internal lateinit var progressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        firebaseAuth = FirebaseAuth.getInstance()
 
         progressDialog = ProgressDialog(this)
         progressDialog.setTitle("Espere porfavor")
@@ -49,6 +49,7 @@ class RegisterActivity : AppCompatActivity() {
     private var email = ""
     private var password = ""
 
+
     private fun validateData(){
 
         name = binding.nameEt.text.toString().trim()
@@ -56,99 +57,87 @@ class RegisterActivity : AppCompatActivity() {
         password = binding.passwordEt.text.toString().trim()
         val cPassword = binding.cPasswordEt.text.toString().trim()
 
-        if(name.isEmpty()){
-            Toast.makeText(this,"Ingresa tu nombre...!", Toast.LENGTH_SHORT).show()
+        if (password != cPassword) {
+            showToast("Las contraseñas no coinciden")
+        }else{
+            registerUser()
         }
-        else if(email.isEmpty()){
-            Toast.makeText(this,"Ingresa tu correo electrónico...!", Toast.LENGTH_SHORT).show()
-        }
-        else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            Toast.makeText(this,"Correo electrónico no válido...!", Toast.LENGTH_SHORT).show()
-        }
-        else if(password.isEmpty()){
-            Toast.makeText(this,"Introducir la contraseña...!", Toast.LENGTH_SHORT).show()
-        }
-        else if(cPassword.isEmpty()){
-            Toast.makeText(this,"Confirmar Contraseña...!", Toast.LENGTH_SHORT).show()
-        }
-        else if(password != cPassword){
-            Toast.makeText(this,"La contraseñas no coinciden...!", Toast.LENGTH_SHORT).show()
-        }
-        else{
-            createUserAccount()
-//            RetrofitClient.instance.createUser(
-//                name,
-//                email,
-//                password
-//                )
-//                .enqueue(object: Callback<DefaultResponse>{
-//                    override fun onResponse(
-//                        p0: Call<DefaultResponse>,
-//                        response: Response<DefaultResponse>
-//                    ) {
-//
-//                        Toast.makeText(applicationContext, response.body()?.message,Toast.LENGTH_SHORT).show()
-//                    }
-//
-//                    override fun onFailure(p0: Call<DefaultResponse>, p1: Throwable) {
-//                        Toast.makeText(applicationContext,p1.message,Toast.LENGTH_LONG).show()
-//                    }
-//
-//                })
-        }
-
 
     }
 
-    private fun createUserAccount() {
-        progressDialog.setMessage("Creando cuenta...")
+    @VisibleForTesting
+    internal fun registerUser() {
+
+        progressDialog.setMessage("Creando Cuenta...")
         progressDialog.show()
 
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
+        val userData = RegisterRequest(name, email, password)
+        val call = RetrofitClient.instance.register(userData)
 
-                updateUserInfo()
+        call.enqueue(object : Callback<RegisterResponse> {
+            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+                if (response.isSuccessful) {
+
+                    progressDialog.dismiss()
+                    val registerResponse = response.body()
+
+                    registerResponse?.let {
+                        if (it.success == "Successfully Register") {
+                            // Redirigir a LoginActivity
+                            showToast("Registro exitoso")
+                            startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                            finish()
+                        }
+                    }
+
+
+                } else {
+
+                    response.errorBody()?.let { errorBody ->
+                        try {
+                            progressDialog.dismiss()
+                            val gson = Gson()
+                            val errorResponseType = object : TypeToken<ErrorResponse>() {}.type
+                            val errorResponse: ErrorResponse? = gson.fromJson(errorBody.charStream(), errorResponseType)
+
+                            if (errorResponse?.details != null && errorResponse.details.isNotEmpty()) {
+                                handleValidationErrors(errorResponse.details)
+                            } else {
+                                showToast(errorResponse?.error ?: "Error desconocido")
+                            }
+
+                        } catch (e: Exception) {
+
+                            e.printStackTrace()
+                            showToast("Error al procesar la respuesta del servidor.")
+
+                        }
+                    }
+                }
             }
-            .addOnFailureListener { e->
+
+            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
                 progressDialog.dismiss()
-                Toast.makeText(this,"Fallido al crear la cuenta debido a ${e.message}", Toast.LENGTH_SHORT).show()
+                showToast("Error de conexión: ${t.message}")
             }
+        })
+    }
+    private fun handleValidationErrors(errors: List<ErrorDetail>) {
 
+        val errorMessages = errors.joinToString(separator = "\n") { error ->
+            when (error.path[0]) {
+                "email" -> "${error.message}"
+                "password" -> "${error.message}"
+                "name" -> "${error.message}"
+                else -> "${error.path[0]}: ${error.message}"
+            }
+        }
+        showToast(errorMessages)
     }
 
-    private fun updateUserInfo(){
-        progressDialog.setMessage("Guardando información del usuario...")
-
-        //timestamp
-        val timestamp = System.currentTimeMillis()
-
-        //get currente user uid, since user is registered so we can get now
-        val uid = firebaseAuth.uid
-
-        val hashMap: HashMap<String, Any?> = HashMap()
-
-        hashMap["uid"] = uid
-        hashMap["email"] = email
-        hashMap["name"] = name
-        hashMap["profileImage"] = ""
-        hashMap["userType"] = "user"
-        hashMap["timestamp"] = timestamp
-        hashMap["state"] = true
-
-        val ref = FirebaseDatabase.getInstance().getReference("Users")
-        ref.child(uid!!)
-            .setValue(hashMap)
-            .addOnSuccessListener {
-                progressDialog.dismiss()
-                Toast.makeText(this,"Cuenta creada...", Toast.LENGTH_SHORT).show()
-                //since user account is created to start dashboard of user
-                startActivity(Intent(this@RegisterActivity,DashboardClientActivity::class.java))
-                finish()
-            }
-
-            .addOnFailureListener { e->
-                progressDialog.dismiss()
-                Toast.makeText(this,"Fallido al guardar la informacion del usuario debido a ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+    private fun showToast(message: String) {
+        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
     }
+
+
 }

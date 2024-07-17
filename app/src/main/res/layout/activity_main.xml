@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back01"
+    android:background="@drawable/back04"
     android:padding="20dp"
     tools:context=".MainActivity">
 
@@ -24,8 +24,8 @@
         android:layout_marginTop="10dp"
         android:textStyle="bold"
         android:text="Bienvenido a la Crossfit App"
-        android:textColor="@color/black"
-        android:textSize="16sp"></TextView>
+        android:textColor="#414535"
+        android:textSize="20sp"></TextView>
 
 
     <Button

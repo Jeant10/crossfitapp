@@ -6,14 +6,22 @@ import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.jeantituana2024.tesis.R
+import com.jeantituana2024.tesis.api.RetrofitClient
+import com.jeantituana2024.tesis.models.ResetPasswordRequest
 import com.jeantituana2024.tesis.databinding.ActivityForgotPasswordBinding
+import com.jeantituana2024.tesis.models.GenericResponse
+import com.jeantituana2024.tesis.models.LoginResponse
+import com.jeantituana2024.tesis.models.SingleErrorResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ForgotPasswordActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityForgotPasswordBinding
-
-    private lateinit var firebaseAuth: FirebaseAuth
 
     private lateinit var progressDialog: ProgressDialog
 
@@ -21,8 +29,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityForgotPasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        firebaseAuth = FirebaseAuth.getInstance()
 
         progressDialog = ProgressDialog(this)
         progressDialog.setTitle("Espere porfavor")
@@ -42,29 +48,71 @@ class ForgotPasswordActivity : AppCompatActivity() {
         email = binding.emailEt.text.toString().trim()
 
         if(email.isEmpty()){
-            Toast.makeText(this,"Ingresa tu correo electrónico...!", Toast.LENGTH_SHORT).show()
-        }
-        else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            Toast.makeText(this,"Correo electrónico no valido...!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"Email requerido..!", Toast.LENGTH_SHORT).show()
         }
         else{
-            recoverPassword()
+            resetPassword()
         }
     }
 
-    private fun recoverPassword() {
+    private fun resetPassword(){
 
-        progressDialog.setMessage("Envíando instrucciones para la recuperación de la contraseña al ${email}")
+        progressDialog.setMessage("Enviando...")
         progressDialog.show()
 
-        firebaseAuth.sendPasswordResetEmail(email)
-            .addOnSuccessListener {
-                progressDialog.dismiss()
-                Toast.makeText(this,"Instrucciones para restablecer la contraseña enviadas a \n${email}",Toast.LENGTH_SHORT).show();
+        val resetPasswordRequest = ResetPasswordRequest(email)
+        val call = RetrofitClient.instance.resetPassword(resetPasswordRequest)
+        call.enqueue(object : Callback<GenericResponse>{
+            override fun onResponse(call: Call<GenericResponse>, response: Response<GenericResponse>) {
+                if (response.isSuccessful) {
+
+                    progressDialog.dismiss()
+
+                    val resetResponse = response.body()
+                    resetResponse?.let {
+                        if (it.success == "Reset email sent!") {
+                            // Mostrar mensaje de éxito
+                            showToast("Email de restablecimiento enviado. Por favor, verifica tu correo.")
+                        }
+                    }
+                }
+                else{
+
+                    val errorResponse = response.errorBody()?.string()
+                    errorResponse?.let {
+                        progressDialog.dismiss()
+                        handleErrorResponse(it)
+                    }
+                }
             }
-            .addOnFailureListener {e->
+
+            override fun onFailure(p0: Call<GenericResponse>, e: Throwable) {
                 progressDialog.dismiss()
-                Toast.makeText(this,"No se pudo enviar debido a ${e.message}",Toast.LENGTH_SHORT).show();
+                showToast("Error al procesar la respuesta del servidor ${e.message}")
             }
+
+        })
     }
+
+    private fun showToast(message: String) {
+        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun handleErrorResponse(errorBody: String) {
+        val gson = Gson()
+        val errorResponseType = object : TypeToken<SingleErrorResponse>() {}.type
+        val errorResponse: SingleErrorResponse? = gson.fromJson(errorBody, errorResponseType)
+
+        errorResponse?.let {
+            when (it.error) {
+                "Invalid email" -> {
+                    Toast.makeText(this, "El correo electrónico no es válido", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    Toast.makeText(this, "Error: ${it.error}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
 }

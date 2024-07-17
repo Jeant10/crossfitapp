@@ -9,9 +9,11 @@ import retrofit2.create
 
 object RetrofitClient {
 
-    private val AUTH = "Basic"+Base64.encodeToString("".toByteArray(),Base64.NO_WRAP)
+//    private val AUTH = "Basic"+Base64.encodeToString("".toByteArray(),Base64.NO_WRAP)
 
-    private const val BASE_URL="http://localhost/api/register"
+    private const val BASE_URL="https://api-crossfit.vercel.app/api/"
+
+//    private const val BASE_URL="http://192.168.1.15:3000/api/"
 
 //    private val okHttpClient = OkHttpClient.Builder()
 //        .addInterceptor { chain ->
@@ -25,13 +27,32 @@ object RetrofitClient {
 //            chain.proceed(request)
 //        }.build()
 
-    val instance: Api by lazy{
+
+    private var _instance: Api? = null
+
+    val instance: Api
+        get() {
+            return _instance ?: createInstance()
+        }
+
+    private fun createInstance(): Api {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-//            .client(okHttpClient)
+            .client(OkHttpClient.Builder().build())
             .build()
 
-        retrofit.create(Api::class.java)
+        _instance = retrofit.create(Api::class.java)
+        return _instance!!
+    }
+
+    // Método para cambiar temporalmente la instancia (solo para pruebas)
+    fun setInstanceForTesting(api: Api) {
+        _instance = api
+    }
+
+    // Método para restaurar la instancia original (solo para pruebas)
+    fun resetInstanceForTesting() {
+        _instance = null
     }
 }

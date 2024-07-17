@@ -11,15 +11,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.jeantituana2024.tesis.R
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.databinding.FragmentUsersBinding
-import com.jeantituana2024.tesis.models.PaymentsResponse
 import com.jeantituana2024.tesis.models.SingleErrorResponse
 import com.jeantituana2024.tesis.models.UserModel
 import com.jeantituana2024.tesis.models.UsersResponse

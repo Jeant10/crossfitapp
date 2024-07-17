@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.jeantituana2024.tesis.R
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.databinding.FragmentHomeBinding
 import com.jeantituana2024.tesis.storage.TokenPreferences

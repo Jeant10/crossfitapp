@@ -1,6 +1,5 @@
 package com.jeantituana2024.tesis.kpis
 
-import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
@@ -12,17 +11,12 @@ import androidx.appcompat.widget.Toolbar
 import com.jeantituana2024.tesis.R
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.storage.TokenPreferences
-import com.jeantituana2024.tesis.storage.UserPreferences
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
-import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.HorizontalBarChart
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.jeantituana2024.tesis.models.EarningsByPlan
 import com.jeantituana2024.tesis.models.EarningsByPlanResponse
 import retrofit2.Call

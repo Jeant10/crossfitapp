@@ -8,16 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jeantituana2024.tesis.R
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.databinding.FragmentMembershipBinding
-import com.jeantituana2024.tesis.databinding.FragmentPaysClientBinding
 import com.jeantituana2024.tesis.models.MemberResponse
-import com.jeantituana2024.tesis.models.PaymentsResponse
 import com.jeantituana2024.tesis.models.SingleErrorResponse
 import com.jeantituana2024.tesis.storage.TokenPreferences
 import com.jeantituana2024.tesis.storage.UserPreferences

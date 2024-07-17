@@ -16,13 +16,10 @@ import com.google.gson.reflect.TypeToken
 import com.jeantituana2024.tesis.R
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.auth.LoginActivity
-import com.jeantituana2024.tesis.databinding.FragmentPaysBinding
 import com.jeantituana2024.tesis.databinding.FragmentPaysClientBinding
 import com.jeantituana2024.tesis.models.Payment
-import com.jeantituana2024.tesis.models.PaymentsResponse
 import com.jeantituana2024.tesis.models.PaymentsResponseUser
 import com.jeantituana2024.tesis.models.SingleErrorResponse
-import com.jeantituana2024.tesis.payment.AdapterPay
 import com.jeantituana2024.tesis.storage.TokenPreferences
 import com.jeantituana2024.tesis.storage.UserPreferences
 import retrofit2.Call

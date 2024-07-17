@@ -29,8 +29,6 @@ import com.jeantituana2024.tesis.R
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.databinding.ActivityUserEditBinding
-import com.jeantituana2024.tesis.models.EditProfileRequest
-import com.jeantituana2024.tesis.models.EditProfileWithImageRequest
 import com.jeantituana2024.tesis.models.EditUserRequest
 import com.jeantituana2024.tesis.models.EditUserResponse
 import com.jeantituana2024.tesis.models.EditUserWithImageRequest

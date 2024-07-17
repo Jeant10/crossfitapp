@@ -25,11 +25,6 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -41,9 +36,6 @@ import com.jeantituana2024.tesis.models.EditProfileResponse
 import com.jeantituana2024.tesis.models.EditProfileWithImageRequest
 import com.jeantituana2024.tesis.models.ErrorDetail
 import com.jeantituana2024.tesis.models.ErrorResponse
-import com.jeantituana2024.tesis.models.GenericResponse
-import com.jeantituana2024.tesis.models.SingleErrorResponse
-import com.jeantituana2024.tesis.models.UserLogin
 import com.jeantituana2024.tesis.storage.TokenPreferences
 import com.jeantituana2024.tesis.storage.UserPreferences
 import retrofit2.Callback

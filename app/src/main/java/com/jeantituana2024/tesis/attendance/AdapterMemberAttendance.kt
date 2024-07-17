@@ -7,16 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.Switch
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.RecyclerView
 import com.jeantituana2024.tesis.R
-import com.jeantituana2024.tesis.admin.members.AdapterMember
-import com.jeantituana2024.tesis.admin.members.FilterMember
-import com.jeantituana2024.tesis.admin.members.MemberEditActivity
 import com.jeantituana2024.tesis.databinding.RowAttendanceMemberBinding
-import com.jeantituana2024.tesis.databinding.RowMemberBinding
 import com.jeantituana2024.tesis.models.Member
 import com.jeantituana2024.tesis.storage.TokenPreferences
 

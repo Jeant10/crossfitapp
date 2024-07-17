@@ -9,29 +9,22 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageButton
-import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.jeantituana2024.tesis.admin.users.AdapterUser
-import com.jeantituana2024.tesis.admin.users.FilterUser
-import com.jeantituana2024.tesis.admin.users.UserEditActivity
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.databinding.RowPlanBinding
-import com.jeantituana2024.tesis.models.EditUserResponse
 import com.jeantituana2024.tesis.models.Plan
 import com.jeantituana2024.tesis.models.PlanResponse
 import com.jeantituana2024.tesis.models.SingleErrorResponse
-import com.jeantituana2024.tesis.models.UserModel
 import com.jeantituana2024.tesis.storage.TokenPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.Collections
 
 class AdapterPlan: RecyclerView.Adapter<AdapterPlan.HolderPlan>, Filterable{
 

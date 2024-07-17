@@ -1,6 +1,5 @@
 package com.jeantituana2024.tesis.client.attendances
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
@@ -16,13 +15,10 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jeantituana2024.tesis.R
 import com.jeantituana2024.tesis.api.RetrofitClient
-import com.jeantituana2024.tesis.attendance.AdapterAttendance
 import com.jeantituana2024.tesis.auth.LoginActivity
-import com.jeantituana2024.tesis.databinding.FragmentAttendancesBinding
 import com.jeantituana2024.tesis.databinding.FragmentAttendancesClientBinding
 import com.jeantituana2024.tesis.models.Attendance
 import com.jeantituana2024.tesis.models.AttendancesResponse
-import com.jeantituana2024.tesis.models.MembersResponse
 import com.jeantituana2024.tesis.models.SingleErrorResponse
 import com.jeantituana2024.tesis.storage.TokenPreferences
 import com.jeantituana2024.tesis.storage.UserPreferences

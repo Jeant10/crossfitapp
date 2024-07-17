@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,14 +17,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jeantituana2024.tesis.R
-import com.jeantituana2024.tesis.admin.members.AdapterMember
-import com.jeantituana2024.tesis.admin.members.FilterMember
-import com.jeantituana2024.tesis.admin.members.MemberEditActivity
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.databinding.RowPayBinding
 import com.jeantituana2024.tesis.models.DeletePaymentResponse
-import com.jeantituana2024.tesis.models.Member
 import com.jeantituana2024.tesis.models.Payment
 import com.jeantituana2024.tesis.models.SingleErrorResponse
 import com.jeantituana2024.tesis.storage.TokenPreferences

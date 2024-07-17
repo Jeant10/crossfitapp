@@ -8,12 +8,8 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.jeantituana2024.tesis.client.payments.AdapterPayClient
-import com.jeantituana2024.tesis.client.payments.FilterPayClient
-import com.jeantituana2024.tesis.databinding.RowPayClientBinding
 import com.jeantituana2024.tesis.databinding.RowPayNextBinding
 import com.jeantituana2024.tesis.models.PayInfo
-import com.jeantituana2024.tesis.models.Payment
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone

@@ -1,7 +1,6 @@
 package com.jeantituana2024.tesis.client.attendances
 
 import android.widget.Filter
-import com.jeantituana2024.tesis.attendance.AdapterAttendance
 import com.jeantituana2024.tesis.models.Attendance
 
 class FilterAttendanceClient: Filter {

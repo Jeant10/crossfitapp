@@ -17,15 +17,12 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jeantituana2024.tesis.models.ErrorDetail
 import com.jeantituana2024.tesis.models.RegisterResponse
-import androidx.annotation.VisibleForTesting
 
-// Marca el método con @VisibleForTesting para que sea accesible solo para pruebas
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
 
-    @VisibleForTesting
-    internal lateinit var progressDialog: ProgressDialog
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,8 +62,7 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
-    @VisibleForTesting
-    internal fun registerUser() {
+    private fun registerUser() {
 
         progressDialog.setMessage("Creando Cuenta...")
         progressDialog.show()

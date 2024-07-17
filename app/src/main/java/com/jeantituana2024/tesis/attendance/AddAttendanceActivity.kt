@@ -10,11 +10,9 @@ import android.os.Bundle
 import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.jeantituana2024.tesis.R
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.databinding.ActivityAddAttendanceBinding
-import com.jeantituana2024.tesis.databinding.ActivityAddMemberBinding
 import com.jeantituana2024.tesis.models.AttendanceRequest
 import com.jeantituana2024.tesis.models.AttendanceResponse
 import com.jeantituana2024.tesis.models.ErrorDetail

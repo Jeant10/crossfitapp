@@ -3,17 +3,13 @@ package com.jeantituana2024.tesis.auth
 import android.app.ProgressDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Patterns
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.jeantituana2024.tesis.R
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.models.ResetPasswordRequest
 import com.jeantituana2024.tesis.databinding.ActivityForgotPasswordBinding
 import com.jeantituana2024.tesis.models.GenericResponse
-import com.jeantituana2024.tesis.models.LoginResponse
 import com.jeantituana2024.tesis.models.SingleErrorResponse
 import retrofit2.Call
 import retrofit2.Callback

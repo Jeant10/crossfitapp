@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.jeantituana2024.tesis.R
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.databinding.ActivityPlanEditBinding
@@ -17,7 +16,6 @@ import com.jeantituana2024.tesis.models.ErrorDetail
 import com.jeantituana2024.tesis.models.ErrorResponse
 import com.jeantituana2024.tesis.models.PlanCreateRequest
 import com.jeantituana2024.tesis.models.PlanResponse
-import com.jeantituana2024.tesis.models.PlansResponse
 import com.jeantituana2024.tesis.models.SingleErrorResponse
 import com.jeantituana2024.tesis.storage.TokenPreferences
 import retrofit2.Call

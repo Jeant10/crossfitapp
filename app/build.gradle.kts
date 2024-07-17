@@ -66,9 +66,6 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    implementation("com.google.firebase:firebase-auth-ktx:23.0.0")
-    implementation("com.google.firebase:firebase-database-ktx:21.0.0")
-
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("com.google.firebase:firebase-storage:21.0.0")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
@@ -81,7 +78,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.2")
     implementation("androidx.media3:media3-common:1.3.1")
-
 
 
     testImplementation("junit:junit:4.13.2")

@@ -13,13 +13,11 @@ import com.google.gson.reflect.TypeToken
 import com.jeantituana2024.tesis.R
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.auth.LoginActivity
-import com.jeantituana2024.tesis.databinding.ActivityMemberEditBinding
 import com.jeantituana2024.tesis.databinding.ActivityPayEditBinding
 import com.jeantituana2024.tesis.models.ErrorDetail
 import com.jeantituana2024.tesis.models.ErrorResponse
 import com.jeantituana2024.tesis.models.GetPaymentResponse
 import com.jeantituana2024.tesis.models.PaymentRequest
-import com.jeantituana2024.tesis.models.Plan
 import com.jeantituana2024.tesis.models.SingleErrorResponse
 import com.jeantituana2024.tesis.storage.TokenPreferences
 import retrofit2.Call

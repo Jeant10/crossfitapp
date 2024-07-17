@@ -34,9 +34,9 @@ import retrofit2.Response
 class AttendancesFragment : Fragment() {
 
 
-    internal lateinit var binding: FragmentAttendancesBinding
-    internal lateinit var userPreferences: UserPreferences
-    internal lateinit var tokenPreferences: TokenPreferences
+    private lateinit var binding: FragmentAttendancesBinding
+    private lateinit var userPreferences: UserPreferences
+    private lateinit var tokenPreferences: TokenPreferences
     private lateinit var adapterMemberAttendance: AdapterMemberAttendance
     private lateinit var memberArrayList: ArrayList<Member>
 
@@ -87,7 +87,7 @@ class AttendancesFragment : Fragment() {
 
     }
 
-    internal fun loadMembersAttendance(){
+    private fun loadMembersAttendance(){
         memberArrayList = ArrayList()
         val token = tokenPreferences.getToken()
 

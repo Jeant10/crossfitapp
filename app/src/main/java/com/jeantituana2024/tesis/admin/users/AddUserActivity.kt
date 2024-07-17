@@ -16,7 +16,6 @@ import com.jeantituana2024.tesis.models.CreateUser
 import com.jeantituana2024.tesis.models.ErrorDetail
 import com.jeantituana2024.tesis.models.ErrorResponse
 import com.jeantituana2024.tesis.models.RegisterResponse
-import com.jeantituana2024.tesis.models.SingleErrorResponse
 import com.jeantituana2024.tesis.storage.TokenPreferences
 import retrofit2.Call
 import retrofit2.Callback

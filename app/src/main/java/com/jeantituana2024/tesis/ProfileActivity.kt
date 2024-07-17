@@ -4,21 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.jeantituana2024.tesis.databinding.ActivityProfileBinding
-
-import android.text.format.DateFormat
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.jeantituana2024.tesis.admin.DashboardAdminActivity
 import com.jeantituana2024.tesis.storage.UserPreferences
-import java.util.Calendar
-import java.util.Locale
+
 
 class ProfileActivity : AppCompatActivity() {
 

@@ -1,14 +1,11 @@
 package com.jeantituana2024.tesis.kpis
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
-import com.jeantituana2024.tesis.R
 import com.jeantituana2024.tesis.databinding.FragmentKpisBinding
 import com.jeantituana2024.tesis.storage.TokenPreferences
 import com.jeantituana2024.tesis.storage.UserPreferences

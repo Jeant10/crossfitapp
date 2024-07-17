@@ -1,11 +1,9 @@
 package com.jeantituana2024.tesis.admin.users
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +14,6 @@ import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -33,7 +30,6 @@ import com.jeantituana2024.tesis.storage.TokenPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.Collections
 
 
 class AdapterUser: RecyclerView.Adapter<AdapterUser.HolderUser>, Filterable{

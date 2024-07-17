@@ -11,7 +11,6 @@ import android.widget.Filterable
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -20,8 +19,6 @@ import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.databinding.RowAttendanceBinding
 import com.jeantituana2024.tesis.models.Attendance
 import com.jeantituana2024.tesis.models.AttendanceResponse
-import com.jeantituana2024.tesis.models.Member
-import com.jeantituana2024.tesis.models.Plan
 import com.jeantituana2024.tesis.models.SingleErrorResponse
 import com.jeantituana2024.tesis.storage.TokenPreferences
 import retrofit2.Call

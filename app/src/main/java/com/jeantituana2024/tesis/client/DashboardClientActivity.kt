@@ -26,10 +26,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jeantituana2024.tesis.ProfileActivity
 import com.jeantituana2024.tesis.R
-import com.jeantituana2024.tesis.admin.HomeFragment
-import com.jeantituana2024.tesis.admin.members.MembersFragment
-import com.jeantituana2024.tesis.admin.plans.PlansFragment
-import com.jeantituana2024.tesis.admin.users.UsersFragment
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.client.attendances.AttendancesClientFragment
@@ -37,8 +33,6 @@ import com.jeantituana2024.tesis.client.membership.MembershipFragment
 import com.jeantituana2024.tesis.client.nextpays.NextPaysFragment
 import com.jeantituana2024.tesis.client.payments.PaysClientFragment
 import com.jeantituana2024.tesis.client.plans.PlansClientFragment
-import com.jeantituana2024.tesis.databinding.ActivityDashboardClientBinding
-import com.jeantituana2024.tesis.models.ErrorResponse
 import com.jeantituana2024.tesis.models.GenericResponse
 import com.jeantituana2024.tesis.models.SingleErrorResponse
 import com.jeantituana2024.tesis.storage.TokenPreferences

@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.loginBtn.setOnClickListener {
-             LoginUser()
+             loginUser()
         }
 
         binding.forgotTv.setOnClickListener {
@@ -60,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
 
     private var email=""
     private var password=""
-    private fun LoginUser(){
+    private fun loginUser(){
 
         progressDialog.setMessage("Iniciando Sesion...")
         progressDialog.show()

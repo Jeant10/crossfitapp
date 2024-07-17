@@ -1,9 +1,7 @@
 package com.jeantituana2024.tesis.client.nextpays
 
 import android.widget.Filter
-import com.jeantituana2024.tesis.client.payments.AdapterPayClient
 import com.jeantituana2024.tesis.models.PayInfo
-import com.jeantituana2024.tesis.models.Payment
 
 class FilterNextPay: Filter {
 

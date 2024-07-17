@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="165dp"
+    android:background="@drawable/back03"
+    android:gravity="bottom"
+    android:padding="15dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profileTv"
+        android:layout_width="66dp"
+        android:layout_height="66dp"
+        android:background="@color/white"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_person_gray"
+        android:layout_marginBottom="10dp"
+        app:shapeAppearanceOverlay="@style/styleRoundeCornersImageNav">
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+
+    <TextView
+        android:id="@+id/nameEt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="jeantituana"
+        android:textColor="@color/white"
+        android:textStyle="bold">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/emailEt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="abc@examgle.com"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:layout_marginBottom="10dp">
+
+    </TextView>
+
+
+
+</LinearLayout>

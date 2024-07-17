@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="148dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="5dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="2dp"
+    app:contentPadding="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back11"
+        android:padding="16dp">
+
+        <!-- Nombre Completo -->
+        <TextView
+            android:id="@+id/tvName"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre Completo"
+            android:layout_toStartOf="@id/switchStd"
+            android:textStyle="bold"
+            android:layout_alignParentStart="true"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <!-- Email -->
+        <TextView
+            android:id="@+id/txtEmail"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvName"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Email:" />
+
+        <TextView
+            android:id="@+id/tvEmail"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="match_parent"
+            android:layout_toStartOf="@id/switchStd"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvName"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@id/txtEmail"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="example@domain.com" />
+
+        <!-- Date -->
+        <TextView
+            android:id="@+id/txtinscriptionDate"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha de Inscripcion:"
+            android:layout_below="@id/txtEmail"
+            android:layout_marginRight="8dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvinscriptionDate"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2024-01-01"
+            android:layout_below="@id/txtEmail"
+            android:layout_toEndOf="@id/txtinscriptionDate"
+            android:layout_toStartOf="@id/txtGender"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="1" />
+
+        <!-- Gender -->
+        <TextView
+            android:id="@+id/txtGender"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender:"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_below="@id/txtEmail"
+            android:layout_toStartOf="@id/tvGender"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvGender"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="M"
+            android:layout_marginTop="8dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/txtEmail"
+            android:ellipsize="end"
+            android:maxLines="1" />
+
+
+        <!-- Teléfono -->
+        <TextView
+            android:id="@+id/txtPhone"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtinscriptionDate"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Teléfono:" />
+
+        <TextView
+            android:id="@+id/tvPhone"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1234567890"
+            android:layout_below="@id/txtinscriptionDate"
+            android:layout_toEndOf="@id/txtPhone"
+            android:layout_marginTop="8dp"
+            android:layout_toStartOf="@id/txtPlan"
+            android:ellipsize="end"
+            android:maxLines="1" />
+
+        <!-- Plan -->
+        <TextView
+            android:id="@+id/txtPlan"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Plan:"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_below="@id/txtinscriptionDate"
+            android:layout_toStartOf="@id/tvPlan"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvPlan"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Plan Básico One Mounth"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/txtinscriptionDate"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:ellipsize="end"
+            android:maxLines="1" />
+
+        <!-- Switch -->
+        <Switch
+            android:id="@+id/switchStd"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:padding="5dp"
+            android:layout_marginLeft="8dp"
+            android:background="@android:color/transparent"
+            android:layout_alignParentEnd="true">
+
+        </Switch>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

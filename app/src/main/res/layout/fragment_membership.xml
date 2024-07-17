@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back01"
+    tools:context=".client.membership.MembershipFragment">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/membership"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginBottom="5dp"
+        app:cardBackgroundColor="@color/white"
+        android:visibility="visible"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="2dp"
+        app:contentPadding="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back11"
+            android:padding="16dp">
+
+            <!-- Nombre Completo -->
+            <TextView
+                android:id="@+id/tvName"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre Completo"
+                android:textStyle="bold"
+                android:layout_alignParentStart="true"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <!-- Identification-->
+            <TextView
+                android:id="@+id/txtIdentification"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvName"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Identificacion:" />
+
+            <TextView
+                android:id="@+id/tvIdentification"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvName"
+                android:layout_marginTop="8dp"
+                android:layout_toEndOf="@id/txtIdentification"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="1234567890" />
+
+            <!-- Email -->
+            <TextView
+                android:id="@+id/txtEmail"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtIdentification"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Email:" />
+
+            <TextView
+                android:id="@+id/tvEmail"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtIdentification"
+                android:layout_marginTop="8dp"
+                android:layout_toEndOf="@id/txtEmail"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="example@domain.com" />
+
+            <!-- Born Date -->
+            <TextView
+                android:id="@+id/txtBornDate"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha de Nacimiento:"
+                android:layout_below="@id/txtEmail"
+                android:layout_marginRight="8dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/tvBornDate"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2024-01-01"
+                android:layout_below="@id/txtEmail"
+                android:layout_toEndOf="@id/txtBornDate"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxLines="1" />
+
+            <!-- Date -->
+            <TextView
+                android:id="@+id/txtInscriptionDate"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha de Inscripcion:"
+                android:layout_below="@id/txtBornDate"
+                android:layout_marginRight="8dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/tvInscriptionDate"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2024-01-01"
+                android:layout_below="@id/txtBornDate"
+                android:layout_toEndOf="@id/txtInscriptionDate"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxLines="1" />
+
+
+            <!-- Teléfono -->
+            <TextView
+                android:id="@+id/txtPhone"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtInscriptionDate"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Teléfono:" />
+
+            <TextView
+                android:id="@+id/tvPhone"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1234567890"
+                android:layout_below="@id/txtInscriptionDate"
+                android:layout_toEndOf="@id/txtPhone"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxLines="1" />
+
+            <!-- Teléfono de emergencia-->
+            <TextView
+                android:id="@+id/txtEmergencyPhone"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtPhone"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Teléfono de Emergencia:" />
+
+            <TextView
+                android:id="@+id/tvEmergencyPhone"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1234567890"
+                android:layout_below="@id/txtPhone"
+                android:layout_toEndOf="@id/txtEmergencyPhone"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxLines="1" />
+
+            <!-- Direction -->
+            <TextView
+                android:id="@+id/txtDirection"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtEmergencyPhone"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Direccion:" />
+
+            <TextView
+                android:id="@+id/tvDirection"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quito, Naciones Unidas y Simon Bolivar 0e4-67"
+                android:layout_below="@id/txtEmergencyPhone"
+                android:layout_toEndOf="@id/txtDirection"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxLines="1" />
+
+            <!-- Gender -->
+            <TextView
+                android:id="@+id/txtGender"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtDirection"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Genero:" />
+
+            <TextView
+                android:id="@+id/tvGender"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="M"
+                android:layout_below="@id/txtDirection"
+                android:layout_toEndOf="@id/txtGender"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxLines="1" />
+
+            <!-- Direction -->
+            <TextView
+                android:id="@+id/txtNationality"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtGender"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Nacionalidad:" />
+
+            <TextView
+                android:id="@+id/tvNationality"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ecuatoriano"
+                android:layout_below="@id/txtGender"
+                android:layout_toEndOf="@id/txtNationality"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxLines="1" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:text=""
+        android:visibility="gone"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"/>
+
+    <!-- ProgressBar en el centro -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/teal_200"
+        android:visibility="gone"/>
+
+</RelativeLayout>

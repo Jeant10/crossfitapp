@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottomHome"
+        android:title="Inicio"
+        android:icon="@drawable/ic_home_gray">
+
+    </item>
+
+    <item
+        android:id="@+id/bottomAttendances"
+        android:title="Asistencias"
+        android:icon="@drawable/ic_attendance_gray">
+
+    </item>
+
+    <item
+        android:id="@+id/bottomPays"
+        android:title="Pagos"
+        android:icon="@drawable/ic_payment_gray">
+
+    </item>
+
+    <item
+        android:id="@+id/bottomKpis"
+        android:title="KPIs"
+        android:icon="@drawable/ic_kpis_gray">
+
+    </item>
+</menu>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="148dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="5dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="2dp"
+    app:contentPadding="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back14"
+        android:padding="16dp">
+
+        <!-- Nombre Completo -->
+        <TextView
+            android:id="@+id/tvName"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre Completo"
+            android:layout_toStartOf="@id/switchStd"
+            android:textStyle="bold"
+            android:layout_alignParentStart="true"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+
+        <!-- Date -->
+        <TextView
+            android:id="@+id/txtDate"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha de Pago:"
+            android:layout_below="@id/tvName"
+            android:layout_marginRight="8dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2024-01-01"
+            android:layout_below="@id/tvName"
+            android:layout_toEndOf="@id/txtDate"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="1" />
+
+
+        <!-- Plan -->
+        <TextView
+            android:id="@+id/txtPlan"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Plan:"
+            android:layout_alignParentStart="true"
+            android:layout_marginRight="8dp"
+            android:layout_below="@id/txtDate"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvPlan"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Plan Básico One Mounth"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@id/txtPlan"
+            android:layout_below="@id/txtDate"
+            android:ellipsize="end"
+            android:maxLines="1" />
+
+        <!-- Teléfono -->
+        <TextView
+            android:id="@+id/txtPay"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtPlan"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Metodo de Pago:" />
+
+        <TextView
+            android:id="@+id/tvPay"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Transferencia"
+            android:layout_below="@id/txtPlan"
+            android:layout_toEndOf="@id/txtPay"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="1" />
+
+        <!-- Switch -->
+        <Switch
+            android:id="@+id/switchStd"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:padding="5dp"
+            android:layout_marginLeft="8dp"
+            android:background="@android:color/transparent"
+            android:layout_alignParentEnd="true">
+
+        </Switch>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

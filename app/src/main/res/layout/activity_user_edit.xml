@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back01"
+    tools:context=".admin.users.UserEditActivity">
+
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/toolbarRl"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="250dp"-->
+<!--        android:background="@drawable/shape_toolbar01">-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/backBtn"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/ic_back_white"-->
+<!--            android:background="@android:color/transparent"-->
+<!--            android:padding="5dp"-->
+<!--            android:layout_margin="10dp">-->
+
+<!--        </ImageButton>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/titleTv"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Edit User"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:textSize="20sp"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:layout_centerHorizontal="true">-->
+
+<!--        </TextView>-->
+<!--        -->
+<!--        -->
+
+<!--    </RelativeLayout>-->
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:elevation="4dp"
+        android:background="@drawable/shape_toolbar02"
+        app:navigationIcon="@drawable/ic_back_white"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/shapeableImageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/back03"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/RoundedBottomCorners">
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/userTv"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:background="@color/white"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_person_gray"
+        app:shapeAppearanceOverlay="@style/styleRoundeCornersImage">
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="225dp">
+
+        <!--EditText: Input Name-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameTil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false">
+
+            <EditText
+                android:id="@+id/nameEt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_edittext01"
+                android:drawableStart="@drawable/ic_person_gray"
+                android:drawablePadding="10dp"
+                android:inputType="textPersonName|textCapWords"
+                android:hint="Nombre"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray01">
+
+            </EditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
+            android:layout_below="@id/nameTil"
+            android:entries="@array/options"
+            android:layout_alignParentEnd="true">
+
+        </Spinner>
+
+        <Button
+            android:id="@+id/updateBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spinner"
+            android:text="Actualizar"
+            android:textColor="@color/white"
+            android:background="@drawable/shape_button01"
+            android:layout_marginTop="20dp">
+
+        </Button>
+
+    </RelativeLayout>
+
+</RelativeLayout>

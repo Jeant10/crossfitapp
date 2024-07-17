@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="168dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="5dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="2dp"
+    app:contentPadding="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back12"
+        android:padding="16dp">
+
+
+        <TextView
+            android:id="@+id/nameTv"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:maxLines="1">
+        </TextView>
+
+        <TextView
+            android:id="@+id/txtDescription"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descripcion:"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/nameTv"
+            android:maxLines="1">
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/descriptionTv"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtDescription"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="1dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="N/A"></TextView>
+
+        <TextView
+            android:id="@+id/txtDuration"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Duracion:"
+            android:layout_marginRight="8dp"
+            android:layout_alignParentBottom="true"
+            android:maxLines="1">
+        </TextView>
+
+        <!--id-->
+        <TextView
+            android:id="@+id/durationTv"
+            style="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="123"
+            android:textSize="14sp"
+            android:layout_toEndOf="@id/txtDuration"
+            android:layout_alignParentBottom="true"
+            android:maxLines="1">
+        </TextView>
+
+        <TextView
+            android:id="@+id/txtDays"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@id/durationTv"
+            android:maxLines="1"
+            android:text="días" />
+
+        <TextView
+            android:id="@+id/txtPrice"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Precio:"
+            android:layout_marginRight="8dp"
+            android:layout_toStartOf="@id/priceTv"
+            android:layout_alignParentBottom="true"
+            android:maxLines="1">
+        </TextView>
+
+        <!--id-->
+        <TextView
+            android:id="@+id/priceTv"
+            style="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="123.12"
+            android:textSize="14sp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:maxLines="1">
+        </TextView>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

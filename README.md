@@ -23,17 +23,23 @@ La aplicación móvil propuesta es para un centro de CrossFit en la ciudad de Qu
 
 ## Links :
 
-El Link del video se encuentra 👉 <a href="[https://www.youtube.com/watch?v=JNIEESohTCY](https://www.youtube.com/watch?v=IKkVLPiGYLU&t=2s)">aqui</a>
+El Link del video se encuentra 👉 <a href="https://www.youtube.com/watch?v=IKkVLPiGYLU&t=2s">aqui</a>
 
-El Link de la store se encuentra 👉 <a href="[https://drive.google.com/drive/folders/1gKFEISCkPzpRmPfXcPmBHERrHHzdRPMK](https://crossfit-app.uptodown.com/android)">aqui</a>
+El Link de la store se encuentra 👉 <a href="https://crossfit-app.uptodown.com/android">aqui</a>
 
 
 ## Screenshots :
 
+
 <div style="display: flex; justify-content: space-around;">
-  <img src="https://github.com/Jeant10/topo_app/assets/74752987/af9248c2-f305-413a-987e-397679300742" width="30%" />
-  <img src="https://github.com/Jeant10/topo_app/assets/74752987/8b37d68a-bed4-4c1f-a5fd-38f8e3cdafd0" width="30%" />
-  <img src="https://github.com/Jeant10/topo_app/assets/74752987/8b37d68a-bed4-4c1f-a5fd-38f8e3cdafd0" width="30%" />
+  <img src="https://github.com/user-attachments/assets/a3bd1df6-953a-4502-9e0f-1b8788fcda73" width="30%" />
+  <img src="https://github.com/user-attachments/assets/9a09d9bd-417c-4c42-be1b-90edf3a64970" width="30%" />
+  <img src="https://github.com/user-attachments/assets/df1e868a-7bb8-4089-b2f0-a60ba1029ed5" width="30%" />
+</div>
+<div style="display: flex; justify-content: space-around;">
+  <img src="https://github.com/user-attachments/assets/3dcf812c-2ab6-486d-8673-9337472a13c7" width="30%" />
+  <img src="https://github.com/user-attachments/assets/800db53f-19d0-4ff8-9d2d-a7117f8b9372" width="30%" />
+  <img src="https://github.com/user-attachments/assets/82945028-b0c2-4012-8a71-fa8db7a0634b" width="30%" />
 </div>
 
 ## Para ejecutar esta aplicación

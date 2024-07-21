@@ -30,8 +30,11 @@ El Link de la store se encuentra 👉 <a href="[https://drive.google.com/drive/f
 
 ## Screenshots :
 
-![Screenshot_20240301-031337](https://github.com/Jeant10/topo_app/assets/74752987/af9248c2-f305-413a-987e-397679300742)
-![Screenshot_20240301-031337](https://github.com/Jeant10/topo_app/assets/74752987/8b37d68a-bed4-4c1f-a5fd-38f8e3cdafd0)
+<div style="display: flex; justify-content: space-around;">
+  <img src="https://github.com/Jeant10/topo_app/assets/74752987/af9248c2-f305-413a-987e-397679300742" width="30%" />
+  <img src="https://github.com/Jeant10/topo_app/assets/74752987/8b37d68a-bed4-4c1f-a5fd-38f8e3cdafd0" width="30%" />
+  <img src="https://github.com/Jeant10/topo_app/assets/74752987/8b37d68a-bed4-4c1f-a5fd-38f8e3cdafd0" width="30%" />
+</div>
 
 ## Para ejecutar esta aplicación
 

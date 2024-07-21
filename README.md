@@ -1,6 +1,6 @@
 # Crossfit App - Tesis
 
-La aplicación móvil propuesta es para un centro de CrossFit en la ciudad de Quito que ofrece una serie de ventajas significativas tanto para los administradores como para los entrenadores y miembros del centro.<br>
+La aplicación móvil propuesta es para un centro de CrossFit en la ciudad de Quito que ofrece una serie de ventajas significativas tanto para los administradores como para los entrenadores y miembros.<br>
 
 ## Integrantes de Tesis:
 

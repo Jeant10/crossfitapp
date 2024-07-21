@@ -17,8 +17,8 @@ La aplicación móvil propuesta es para un centro de CrossFit en la ciudad de Qu
 <li>Splash Screen</li>
 <li>Login y Registro de Usuarios</li>
 <li>Restauracion de contraseña</li>
-<li>La aplicacion móvil permite a los administrador la gestion de usuarios, la administración de membresías, creación de planes, registro de asistencias los pagos y visualización de graficas estadísticas</li>
-<li>La aplicacion móvil permite a los clientes la visualización de membresía, visualización de pagos y próximos pagos, visualización de asistencias, visualización de planes, y para los entrenadores, visualización de asistencias.</li>
+<li>La aplicacion móvil permite a los administradores la gestion de usuarios, la administración de membresías, creación de planes, registro de asistencias, seguimiento de los pagos y visualización de graficas estadísticas</li>
+<li>La aplicacion móvil permite a los clientes la visualización de membresía, visualización de pagos y próximos pagos, visualización de asistencias, visualización de planes, y para los entrenadores, visualización de asistencias de todos los miembros.</li>
 </ul>
 
 ## Links :

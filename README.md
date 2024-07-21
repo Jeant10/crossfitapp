@@ -39,7 +39,8 @@ El Link de la store se encuentra 👉 <a href="[https://drive.google.com/drive/f
 <li>Clonar el repo</li>
 <li>Abrir con Android Studio</b></li>
 <li>Configurar aplicacion para tu dispositivo fisico o movil</b></li>
-<li>Conecta tu app a firebase storage</b></li>
+<li>Conectar la app a firebase storage</b></li>
+<li>Abrir la aplicacion</b></li>
 <li>Colocar las siguientes credenciales: 
 <ul>
 <li>Email: admin@admin.com</li>

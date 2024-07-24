@@ -3,6 +3,7 @@ package com.jeantituana2024.tesis.admin.users
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Intent
@@ -34,11 +35,16 @@ import com.jeantituana2024.tesis.models.EditUserResponse
 import com.jeantituana2024.tesis.models.EditUserWithImageRequest
 import com.jeantituana2024.tesis.models.ErrorDetail
 import com.jeantituana2024.tesis.models.ErrorResponse
+import com.jeantituana2024.tesis.models.PlansResponse
 import com.jeantituana2024.tesis.models.SingleErrorResponse
 import com.jeantituana2024.tesis.storage.TokenPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+import java.util.TimeZone
 
 
 class UserEditActivity : AppCompatActivity() {
@@ -47,11 +53,22 @@ class UserEditActivity : AppCompatActivity() {
     private lateinit var progressDialog: ProgressDialog
     private lateinit var tokenPreferences: TokenPreferences
     private val CAMERA_REQUEST_CODE = 0
+    private var selectedDate: Calendar = Calendar.getInstance() // Variable para almacenar la fecha seleccionada
 
-    private var userUid = ""
-    private var userName = ""
-    private var imageUri: Uri?=null
+
+    private var name = ""
+    private var lastname = ""
+    private var email = ""
+    private var password=""
+    private var telefono = ""
+    private var emergencyPhone = ""
+    private var direction = ""
+    private var gender = ""
     private var rol=""
+    private var userUid=""
+    private var nationality = ""
+    private var imageUri: Uri?=null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +96,7 @@ class UserEditActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+        setupGenderSelection()
 
         // Configurar el comportamiento del botón de regreso
         binding.toolbar.setNavigationOnClickListener {
@@ -115,8 +133,37 @@ class UserEditActivity : AppCompatActivity() {
                         val userResponse = response.body()?.user
                         if (userResponse != null) {
 
+                            binding.identificationEt.setText(userResponse.identification)
                             binding.nameEt.setText(userResponse.name)
+                            binding.lastnameEt.setText(userResponse.lastname)
+                            binding.emailEt.setText(userResponse.email)
+                            binding.passwordEt.setText(userResponse.password)
+                            binding.phoneEt.setText(userResponse.phone)
+                            binding.emergencyPhoneEt.setText(userResponse.emergencyPhone)
+                            // Formatear la fecha antes de asignarla al EditText
+                            val formattedDate = formatDateString(userResponse.bornDate)
+                            binding.bornDateEt.setText(formattedDate)
+                            // Actualiza la variable selectedDate
+                            updateSelectedDate(formattedDate)
 
+                            binding.directionEt.setText(userResponse.direction)
+
+
+                            val genderResponse = userResponse.gender
+                            binding.genderRg.check(if (genderResponse == "M") R.id.maleRb else R.id.femaleRb)
+
+
+                            // Configurar nacionalidad
+                            val nationalityResponse = userResponse.nacionality
+                            val nationalities = resources.getStringArray(R.array.nationality)
+                            val nationalityPosition = nationalities.indexOf(nationalityResponse)
+                            if (nationalityPosition >= 0) {
+                                binding.spinner.setSelection(nationalityPosition)
+                            } else {
+                                showToast("La nacionalidad del miembro no es válida")
+                            }
+
+                            Log.d("Error","hola")
                             val role = userResponse.role
 
                             // Obtener la posición del rol en el Spinner
@@ -126,7 +173,7 @@ class UserEditActivity : AppCompatActivity() {
                             //luego añadir trainer
                             // Verificar si el rol está en la lista y establecer la selección
                             if (rolePosition >= 0) {
-                                binding.spinner.setSelection(rolePosition)
+                                binding.roleSpinner.setSelection(rolePosition)
                             } else {
                                 showToast("El rol del usuario no es válido")
                             }
@@ -199,13 +246,71 @@ class UserEditActivity : AppCompatActivity() {
         builder.show()
     }
 
+    private fun updateSelectedDate(dateString: String) {
+        try {
+            val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val date = format.parse(dateString)
+            selectedDate.time = date
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
+    private fun setupGenderSelection() {
+        binding.genderRg.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.maleRb -> Log.d("Género seleccionado","M")
+                R.id.femaleRb -> Log.d("Género seleccionado","F")
+            }
+        }
+    }
+
+    private fun getSelectedGender(): String {
+        return when (binding.genderRg.checkedRadioButtonId) {
+            R.id.maleRb -> "M"
+            R.id.femaleRb -> "F"
+            else -> ""
+        }
+    }
+
+
+
+    private fun formatDateString(dateString: String): String {
+        return try {
+            // Define el formato original de la fecha
+            val originalFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+            originalFormat.timeZone = TimeZone.getTimeZone("UTC") // Asegurar que sea interpretado como UTC
+
+            // Parsear la fecha en el formato original
+            val date = originalFormat.parse(dateString)
+
+            // Define el nuevo formato de la fecha
+            val desiredFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            desiredFormat.timeZone = TimeZone.getTimeZone("UTC") // Mantener la salida en UTC
+            // Formatear la fecha al nuevo formato y devolverla
+            desiredFormat.format(date)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            dateString // En caso de error, devolver el string original
+        }
+    }
+
     private fun handleValidationErrors(errors: List<ErrorDetail>) {
 
         val errorMessages = errors.joinToString(separator = "\n") { error ->
             when (error.path[0]) {
-                "image" -> "${error.message}"
-                "role" -> "${error.message}"
-                "name" -> "${error.message}"
+                "image" -> "${error.path[0]}: ${error.message}"
+                "name" -> "${error.path[0]}: ${error.message}"
+                "lastname" -> "${error.path[0]}: ${error.message}"
+                "email" -> "${error.path[0]}: ${error.message}"
+                "password" -> "${error.path[0]}: ${error.message}"
+                "phone" -> "${error.path[0]}: ${error.message}"
+                "emergencyPhone" -> "${error.path[0]}: ${error.message}"
+                "direction" -> "${error.path[0]}: ${error.message}"
+                "gender" -> "${error.path[0]}: ${error.message}"
+                "role" -> "${error.path[0]}: ${error.message}"
+                "nacionality" -> "${error.path[0]}: ${error.message}"
                 else -> "${error.path[0]}: ${error.message}"
             }
         }
@@ -215,21 +320,24 @@ class UserEditActivity : AppCompatActivity() {
 
     private fun validateData() {
 
-        userName = binding.nameEt.text.toString().trim()
-        rol = binding.spinner.selectedItem.toString().trim()
+        name = binding.nameEt.text.toString().trim()
+        lastname = binding.lastnameEt.text.toString().trim()
+        email = binding.emailEt.text.toString().trim()
+        password = binding.passwordEt.text.toString().trim()
+        telefono = binding.phoneEt.text.toString().trim()
+        emergencyPhone = binding.emergencyPhoneEt.text.toString().trim()
+        direction = binding.directionEt.text.toString().trim()
+        gender = getSelectedGender()
+        nationality = binding.spinner.selectedItem.toString().trim()
+        rol = binding.roleSpinner.selectedItem.toString().trim()
 
-        if(userName.isEmpty()){
-            showToast("Ingresa tu nombre...!")
+        if(imageUri==null){
+            updateUser("")
         }
         else{
-
-            if(imageUri==null){
-                updateUser("")
-            }
-            else{
-                uploadImage()
-            }
+            uploadImage()
         }
+
     }
 
     private fun checkPermission(){
@@ -377,12 +485,14 @@ class UserEditActivity : AppCompatActivity() {
 
             val call = when {
                 imageUri != null -> {
-                    updateRequest = EditUserWithImageRequest(userName, rol, image)
+                    updateRequest = EditUserWithImageRequest(name, lastname, password, email, telefono, emergencyPhone, direction,
+                    gender, nationality, rol, image)
                     RetrofitClient.instance.editUserWithImage("Bearer $token", userUid, updateRequest)
                 }
                 else -> {
 
-                    updateRequest = EditUserRequest(userName, rol)
+                    updateRequest = EditUserRequest(name, lastname, password, email, telefono, emergencyPhone, direction,
+                        gender, nationality, rol)
                     RetrofitClient.instance.editUser("Bearer $token", userUid, updateRequest)
                 }
             }
@@ -399,7 +509,7 @@ class UserEditActivity : AppCompatActivity() {
 
                         if (updateResponse?.success != null) {
                             // Mostrar mensaje de éxito
-                            showToast("Usuario Actualizado")
+                            showToast("Registro Exitoso. ${updateResponse.message ?:""}")
                             setResult(Activity.RESULT_OK)
                         } else {
                             showToast("Error desconocido")

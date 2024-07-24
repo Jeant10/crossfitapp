@@ -85,18 +85,18 @@ class MembershipFragment : Fragment() {
 
                         if (memberResponse != null) {
 
-                            binding.tvName.text = getString(R.string.member_name, memberResponse.name, memberResponse.lastname)
-                            binding.tvIdentification.text = memberResponse.identification
+                            binding.tvName.text = getString(R.string.member_name, memberResponse.user.name, memberResponse.user.lastname)
+                            binding.tvIdentification.text = memberResponse.user.identification
                             binding.tvEmail.text = memberResponse.email
-                            val formattedBornDate = formatDateString(memberResponse.bornDate)
+                            val formattedBornDate = formatDateString(memberResponse.user.bornDate)
                             binding.tvBornDate.text = formattedBornDate
                             val formattedDate = formatDateString(memberResponse.inscriptionDate)
                             binding.tvInscriptionDate.text = formattedDate
-                            binding.tvPhone.text = memberResponse.phone
-                            binding.tvEmergencyPhone.text = memberResponse.emergencyPhone
-                            binding.tvDirection.text = memberResponse.direction
-                            binding.tvGender.text = memberResponse.gender
-                            binding.tvNationality.text = memberResponse.nacionality
+                            binding.tvPhone.text = memberResponse.user.phone
+                            binding.tvEmergencyPhone.text = memberResponse.user.emergencyPhone
+                            binding.tvDirection.text = memberResponse.user.direction
+                            binding.tvGender.text = memberResponse.user.gender
+                            binding.tvNationality.text = memberResponse.user.nacionality
 
                         }
                         else {

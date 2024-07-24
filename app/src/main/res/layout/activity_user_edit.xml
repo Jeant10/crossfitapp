@@ -7,39 +7,6 @@
     android:background="@drawable/back01"
     tools:context=".admin.users.UserEditActivity">
 
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/toolbarRl"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="250dp"-->
-<!--        android:background="@drawable/shape_toolbar01">-->
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/backBtn"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:src="@drawable/ic_back_white"-->
-<!--            android:background="@android:color/transparent"-->
-<!--            android:padding="5dp"-->
-<!--            android:layout_margin="10dp">-->
-
-<!--        </ImageButton>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/titleTv"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Edit User"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:textSize="20sp"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:layout_centerHorizontal="true">-->
-
-<!--        </TextView>-->
-<!--        -->
-<!--        -->
-
-<!--    </RelativeLayout>-->
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -76,61 +43,360 @@
 
     </com.google.android.material.imageview.ShapeableImageView>
 
-    <RelativeLayout
+    <!-- ScrollView for Form Inputs -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginTop="225dp">
 
-        <!--EditText: Input Name-->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nameTil"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintEnabled="false">
+            android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/nameEt"
+            <!-- Identification -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/identificationTil"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/shape_edittext01"
-                android:drawableStart="@drawable/ic_person_gray"
-                android:drawablePadding="10dp"
-                android:inputType="textPersonName|textCapWords"
-                android:hint="Nombre"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/gray01">
+                android:layout_height="wrap_content"
+                app:hintEnabled="false">
 
-            </EditText>
+                <EditText
+                    android:id="@+id/identificationEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/ic_person_gray"
+                    android:drawablePadding="10dp"
+                    android:hint="Identificación"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColorHint="@color/gray01"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:clickable="false"
+                    style="@style/DisabledEditTextStyle"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:padding="10dp"
-            android:layout_below="@id/nameTil"
-            android:entries="@array/options"
-            android:layout_alignParentEnd="true">
+            <!-- Name -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nameTil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/identificationTil"
+                android:layout_marginTop="5dp"
+                app:hintEnabled="false">
 
-        </Spinner>
+                <EditText
+                    android:id="@+id/nameEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_edittext01"
+                    android:drawableStart="@drawable/ic_person_gray"
+                    android:drawablePadding="10dp"
+                    android:hint="Nombre"
+                    android:inputType="textPersonName|textCapWords"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray01"/>
 
-        <Button
-            android:id="@+id/updateBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/spinner"
-            android:text="Actualizar"
-            android:textColor="@color/white"
-            android:background="@drawable/shape_button01"
-            android:layout_marginTop="20dp">
+            </com.google.android.material.textfield.TextInputLayout>
 
-        </Button>
+            <!-- Lastname -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lastnameTil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nameTil"
+                android:layout_marginTop="5dp"
+                app:hintEnabled="false">
 
-    </RelativeLayout>
+                <EditText
+                    android:id="@+id/lastnameEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_edittext01"
+                    android:drawableStart="@drawable/ic_person_gray"
+                    android:drawablePadding="10dp"
+                    android:hint="Apellido"
+                    android:inputType="textPersonName|textCapWords"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray01"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Email -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailTil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lastnameTil"
+                android:layout_marginTop="5dp"
+                app:hintEnabled="false">
+
+                <EditText
+                    android:id="@+id/emailEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_edittext01"
+                    android:drawableStart="@drawable/ic_email_gray"
+                    android:drawablePadding="10dp"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray01"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordTil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/emailTil"
+                android:layout_marginTop="5dp"
+                app:passwordToggleEnabled="true"
+                app:hintEnabled="false">
+
+                <EditText
+                    android:id="@+id/passwordEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_edittext01"
+                    android:drawableStart="@drawable/ic_lock_gray"
+                    android:drawablePadding="10dp"
+                    android:hint="Contraseña"
+                    android:inputType="textPassword"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray01">
+
+                </EditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Phone -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phoneTil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/passwordTil"
+                android:layout_marginTop="5dp"
+                app:hintEnabled="false">
+
+                <EditText
+                    android:id="@+id/phoneEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_edittext01"
+                    android:drawableStart="@drawable/ic_phone_gray"
+                    android:drawablePadding="10dp"
+                    android:hint="Teléfono"
+                    android:inputType="phone"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray01"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Emergency Phone -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emergencyPhoneTil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/phoneTil"
+                android:layout_marginTop="5dp"
+                app:hintEnabled="false">
+
+                <EditText
+                    android:id="@+id/emergencyPhoneEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_edittext01"
+                    android:drawableStart="@drawable/ic_emergency_gray"
+                    android:drawablePadding="10dp"
+                    android:hint="Teléfono de Emergencia"
+                    android:inputType="phone"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray01"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Birth Date -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/bornDateTil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/emergencyPhoneTil"
+                android:layout_marginTop="5dp"
+                app:hintEnabled="false">
+
+                <EditText
+                    android:id="@+id/bornDateEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/ic_calendary_gray"
+                    android:drawablePadding="10dp"
+                    android:hint="Fecha de Nacimiento"
+                    android:inputType="date"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray01"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:clickable="false"
+                    style="@style/DisabledEditTextStyle"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Direction -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/directionTil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bornDateTil"
+                android:layout_marginTop="5dp"
+                app:hintEnabled="false">
+
+                <EditText
+                    android:id="@+id/directionEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_edittext01"
+                    android:drawableStart="@drawable/ic_place_gray"
+                    android:drawablePadding="10dp"
+                    android:hint="Dirección"
+                    android:inputType="textPostalAddress"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray01"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:id="@+id/roleSpinnerContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/directionTil"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/roleLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rol:"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray02"
+                    android:textSize="14sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"/>
+
+                <Spinner
+                    android:id="@+id/roleSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/options"
+                    android:layout_alignParentEnd="true"
+                    android:padding="5dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/genderContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/roleSpinnerContainer"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/genderLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Género:"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray02"
+                    android:textSize="14sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"/>
+
+                <RadioGroup
+                    android:id="@+id/genderRg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/maleRb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:buttonTint="@color/black"
+                        android:drawablePadding="5dp"
+                        android:text="M"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"/> <!-- Reducido de 18sp a 12sp -->
+
+                    <RadioButton
+                        android:id="@+id/femaleRb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:buttonTint="@color/black"
+                        android:drawablePadding="5dp"
+                        android:text="F"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"/> <!-- Reducido de 14sp a 12sp -->
+
+                </RadioGroup>
+            </RelativeLayout>
+
+
+            <!-- Register Button -->
+            <RelativeLayout
+                android:id="@+id/spinnerContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/genderContainer"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:id="@+id/nacionalityLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="Nacionalidad:"
+                    android:textColor="@color/gray02"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:entries="@array/nationality"
+                    android:padding="5dp">
+
+                </Spinner>
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/updateBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/spinnerContainer"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/shape_button01"
+                android:text="Actualizar"
+                android:textColor="@color/white"/>
+
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

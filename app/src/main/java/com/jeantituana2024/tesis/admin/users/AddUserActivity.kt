@@ -1,10 +1,16 @@
 package com.jeantituana2024.tesis.admin.users
 
+import android.R
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
@@ -15,11 +21,17 @@ import com.jeantituana2024.tesis.databinding.ActivityAddUserBinding
 import com.jeantituana2024.tesis.models.CreateUser
 import com.jeantituana2024.tesis.models.ErrorDetail
 import com.jeantituana2024.tesis.models.ErrorResponse
+import com.jeantituana2024.tesis.models.Plan
+import com.jeantituana2024.tesis.models.PlansResponse
 import com.jeantituana2024.tesis.models.RegisterResponse
+import com.jeantituana2024.tesis.models.SingleErrorResponse
+import com.jeantituana2024.tesis.models.UserRequest
+import com.jeantituana2024.tesis.models.UserResponse
 import com.jeantituana2024.tesis.storage.TokenPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Calendar
 
 
 class AddUserActivity : AppCompatActivity() {
@@ -49,9 +61,15 @@ class AddUserActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+        setupGenderSelection()
+
         // Configurar el comportamiento del botón de regreso
         binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
+        }
+
+        binding.bornDateEt.setOnClickListener {
+            showDatePickerDialog()
         }
 
         binding.submitBtn.setOnClickListener {
@@ -60,24 +78,35 @@ class AddUserActivity : AppCompatActivity() {
 
     }
 
+    private var identification = ""
     private var name = ""
-    private var email=""
+    private var lastname = ""
+    private var email = ""
     private var password=""
+    private var telefono = ""
+    private var emergencyPhone = ""
+    private var dateBorn = ""
+    private var direction = ""
+    private var gender = ""
+    private var rol=""
+    private var nationality = ""
 
     private fun validateData() {
 
+        identification = binding.identificationEt.text.toString().trim()
         name = binding.nameEt.text.toString().trim()
+        lastname = binding.lastnameEt.text.toString().trim()
         email = binding.emailEt.text.toString().trim()
         password = binding.passwordEt.text.toString().trim()
+        telefono = binding.phoneEt.text.toString().trim()
+        emergencyPhone = binding.emergencyPhoneEt.text.toString().trim()
+        dateBorn = binding.bornDateEt.text.toString().trim()
+        direction = binding.directionEt.text.toString().trim()
+        gender = getSelectedGender()
+        nationality = binding.spinner.selectedItem.toString().trim()
+        rol = binding.spinner.selectedItem.toString().trim()
 
-        val cPassword = binding.cPasswordEt.text.toString().trim()
-
-        if(password != cPassword){
-            showToast("Password doesn't match...!")
-        }
-        else{
-            registerUser()
-        }
+        registerUser()
 
     }
 
@@ -86,13 +115,15 @@ class AddUserActivity : AppCompatActivity() {
         progressDialog.setMessage("Creando Usuario...")
         progressDialog.show()
 
-        val userData = CreateUser(name, email, password)
         val token = tokenPreferences.getToken()
+
+        val userData = UserRequest(identification, name, lastname, password, email, telefono, emergencyPhone,
+            dateBorn,direction,gender,rol,nationality)
 
         val call = RetrofitClient.instance.createUser("Bearer $token", userData)
 
-        call.enqueue(object : Callback<RegisterResponse> {
-            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+        call.enqueue(object : Callback<UserResponse> {
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
                     progressDialog.dismiss()
 
@@ -140,7 +171,7 @@ class AddUserActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 progressDialog.dismiss()
                 showToast("Error de conexión: ${t.message}")
             }
@@ -163,18 +194,61 @@ class AddUserActivity : AppCompatActivity() {
         builder.show()
     }
 
+    private fun setupGenderSelection() {
+        binding.genderRg.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                com.jeantituana2024.tesis.R.id.maleRb -> Log.d("Género seleccionado","M")
+                com.jeantituana2024.tesis.R.id.femaleRb -> Log.d("Género seleccionado","F")
+            }
+        }
+    }
     private fun handleValidationErrors(errors: List<ErrorDetail>) {
 
         val errorMessages = errors.joinToString(separator = "\n") { error ->
             when (error.path[0]) {
-                "email" -> "${error.message}"
-                "password" -> "Password: ${error.message}"
-                "name" -> "${error.message}"
+                "identification" -> "${error.path[0]}: ${error.message}"
+                "name" -> "${error.path[0]}: ${error.message}"
+                "lastname" -> "${error.path[0]}: ${error.message}"
+                "email" -> "${error.path[0]}: ${error.message}"
+                "password" -> "${error.path[0]}: ${error.message}"
+                "phone" -> "${error.path[0]}: ${error.message}"
+                "emergency_phone" -> "${error.path[0]}: ${error.message}"
+                "born_date" -> "${error.path[0]}: ${error.message}"
+                "direction" -> "${error.path[0]}: ${error.message}"
+                "gender" -> "${error.path[0]}: ${error.message}"
+                "role" -> "${error.path[0]}: ${error.message}"
+                "nacionality" -> "${error.path[0]}: ${error.message}"
                 else -> "${error.path[0]}: ${error.message}"
             }
         }
         showToast(errorMessages)
     }
+
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val formattedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
+                binding.bornDateEt.setText(formattedDate)
+            },
+            year, month, day
+        )
+        datePickerDialog.show()
+    }
+
+    private fun getSelectedGender(): String {
+        return when (binding.genderRg.checkedRadioButtonId) {
+            com.jeantituana2024.tesis.R.id.maleRb -> "M"
+            com.jeantituana2024.tesis.R.id.femaleRb -> "F"
+            else -> ""
+        }
+    }
+
 
     private fun showToast(message: String) {
         Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()

@@ -15,15 +15,11 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.jeantituana2024.tesis.R
-import com.jeantituana2024.tesis.admin.members.AdapterMember
-import com.jeantituana2024.tesis.admin.members.AddMemberActivity
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.databinding.FragmentAttendancesBinding
 import com.jeantituana2024.tesis.models.Member
 import com.jeantituana2024.tesis.models.MembersResponse
-import com.jeantituana2024.tesis.models.PaymentsResponse
 import com.jeantituana2024.tesis.models.SingleErrorResponse
 import com.jeantituana2024.tesis.storage.TokenPreferences
 import com.jeantituana2024.tesis.storage.UserPreferences
@@ -161,7 +157,7 @@ class AttendancesFragment : Fragment() {
 
     }
 
-    private fun handleErrorResponse(errorBody: String) {
+    internal fun handleErrorResponse(errorBody: String) {
         val gson = Gson()
         val errorResponseType = object : TypeToken<SingleErrorResponse>() {}.type
         val errorResponse: SingleErrorResponse? = gson.fromJson(errorBody, errorResponseType)
@@ -181,7 +177,7 @@ class AttendancesFragment : Fragment() {
     }
 
     // Función para mostrar una alerta de sesión expirada y redirigir al LoginActivity
-    private fun showSessionExpiredAlert() {
+    internal fun showSessionExpiredAlert() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Sesión Expirada")
         builder.setMessage("Vuelve a iniciar sesión")

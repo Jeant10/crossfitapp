@@ -22,7 +22,7 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/shapeableImageView"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="160dp"
         android:layout_marginTop="50dp"
         android:src="@drawable/back03"
         android:scaleType="centerCrop"
@@ -44,7 +44,7 @@
         android:layout_marginTop="5dp"
         android:fontFamily="sans-serif-condensed"
         android:textColor="@color/white"
-        android:text="Ingresa los campos"
+        android:text="Selecciona los campos"
         android:textSize="20sp">
 
     </TextView>
@@ -55,309 +55,64 @@
         android:layout_height="match_parent"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginTop="200dp">
+        android:layout_marginTop="225dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- Identification -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/identificationTil"
+            <RelativeLayout
+                android:id="@+id/userSpinnerContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintEnabled="false">
+                android:layout_marginTop="5dp">
 
-                <EditText
-                    android:id="@+id/identificationEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/shape_edittext01"
-                    android:drawableStart="@drawable/ic_person_gray"
-                    android:drawablePadding="10dp"
-                    android:hint="Identificación"
-                    android:inputType="text"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray01"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Name -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/nameTil"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/identificationTil"
-                android:layout_marginTop="5dp"
-                app:hintEnabled="false">
-
-                <EditText
-                    android:id="@+id/nameEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/shape_edittext01"
-                    android:drawableStart="@drawable/ic_person_gray"
-                    android:drawablePadding="10dp"
-                    android:hint="Nombre"
-                    android:inputType="textPersonName|textCapWords"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray01"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Lastname -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/lastnameTil"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/nameTil"
-                android:layout_marginTop="5dp"
-                app:hintEnabled="false">
-
-                <EditText
-                    android:id="@+id/lastnameEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/shape_edittext01"
-                    android:drawableStart="@drawable/ic_person_gray"
-                    android:drawablePadding="10dp"
-                    android:hint="Apellido"
-                    android:inputType="textPersonName|textCapWords"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray01"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Email -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/emailTil"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/lastnameTil"
-                android:layout_marginTop="5dp"
-                app:hintEnabled="false">
-
-                <EditText
-                    android:id="@+id/emailEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/shape_edittext01"
-                    android:drawableStart="@drawable/ic_email_gray"
-                    android:drawablePadding="10dp"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray01"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Phone -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/phoneTil"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/emailTil"
-                android:layout_marginTop="5dp"
-                app:hintEnabled="false">
-
-                <EditText
-                    android:id="@+id/phoneEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/shape_edittext01"
-                    android:drawableStart="@drawable/ic_phone_gray"
-                    android:drawablePadding="10dp"
-                    android:hint="Teléfono"
-                    android:inputType="phone"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray01"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Emergency Phone -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/emergencyPhoneTil"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/phoneTil"
-                android:layout_marginTop="5dp"
-                app:hintEnabled="false">
-
-                <EditText
-                    android:id="@+id/emergencyPhoneEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/shape_edittext01"
-                    android:drawableStart="@drawable/ic_emergency_gray"
-                    android:drawablePadding="10dp"
-                    android:hint="Teléfono de Emergencia"
-                    android:inputType="phone"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray01"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Birth Date -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/bornDateTil"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/emergencyPhoneTil"
-                android:layout_marginTop="5dp"
-                app:hintEnabled="false">
-
-                <EditText
-                    android:id="@+id/bornDateEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/shape_edittext01"
-                    android:drawableStart="@drawable/ic_calendary_gray"
-                    android:drawablePadding="10dp"
-                    android:hint="Fecha de Nacimiento"
-                    android:inputType="date"
-                    android:focusable="false"
-                    android:clickable="true"
-                    android:maxLines="1"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray01"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Direction -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/directionTil"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/bornDateTil"
-                android:layout_marginTop="5dp"
-                app:hintEnabled="false">
-
-                <EditText
-                    android:id="@+id/directionEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/shape_edittext01"
-                    android:drawableStart="@drawable/ic_place_gray"
-                    android:drawablePadding="10dp"
-                    android:hint="Dirección"
-                    android:inputType="textPostalAddress"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray01"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        <RelativeLayout
-            android:id="@+id/planSpinnerContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/directionTil"
-            android:layout_marginTop="5dp">
-
-            <TextView
-                android:id="@+id/planLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Plan:"
-                android:textStyle="bold"
-                android:textColor="@color/gray02"
-                android:textSize="14sp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"/>
-
-            <Spinner
-                android:id="@+id/planSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:padding="5dp" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/genderContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/planSpinnerContainer"
-            android:layout_marginTop="5dp">
-
-            <TextView
-                android:id="@+id/genderLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Género:"
-                android:textStyle="bold"
-                android:textColor="@color/gray02"
-                android:textSize="14sp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"/>
-
-            <RadioGroup
-                android:id="@+id/genderRg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/maleRb"
+                <TextView
+                    android:id="@+id/userLabel"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:buttonTint="@color/black"
-                    android:drawablePadding="5dp"
-                    android:text="M"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"/> <!-- Reducido de 18sp a 12sp -->
+                    android:layout_height="wrap_content"
+                    android:text="Correo del Usuario:"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray02"
+                    android:textSize="14sp"
+/>
 
-                <RadioButton
-                    android:id="@+id/femaleRb"
+                <Spinner
+                    android:id="@+id/userSpinner"
+                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:buttonTint="@color/black"
-                    android:drawablePadding="5dp"
-                    android:text="F"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"/> <!-- Reducido de 14sp a 12sp -->
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/userLabel"
+                    android:padding="5dp" />
 
-            </RadioGroup>
-        </RelativeLayout>
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/spinnerContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/genderContainer"
-            android:layout_marginTop="5dp">
-
-            <TextView
-                android:id="@+id/nacionalityLabel"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/planSpinnerContainer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nacionalidad:"
-                android:textStyle="bold"
-                android:textColor="@color/gray02"
-                android:textSize="14sp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"/>
+                android:layout_below="@id/userSpinnerContainer"
+                android:layout_marginTop="5dp">
 
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:entries="@array/nationality"
-                android:layout_alignParentEnd="true">
+                <TextView
+                    android:id="@+id/planLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Plan:"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray02"
+                    android:textSize="14sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"/>
 
-            </Spinner>
+                <Spinner
+                    android:id="@+id/planSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:padding="5dp" />
 
-        </RelativeLayout>
+            </RelativeLayout>
 
 
             <!-- Register Button -->
@@ -365,13 +120,14 @@
                 android:id="@+id/submitBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/spinnerContainer"
+                android:layout_below="@id/planSpinnerContainer"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/shape_button01"
                 android:text="Crear"
                 android:textColor="@color/white"/>
 
-        </RelativeLayout>
+            </RelativeLayout>
+
     </ScrollView>
 </RelativeLayout>

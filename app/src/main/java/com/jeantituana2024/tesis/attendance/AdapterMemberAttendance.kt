@@ -49,13 +49,13 @@ class AdapterMemberAttendance: RecyclerView.Adapter<AdapterMemberAttendance.Hold
 
         if(memberArrayList.isNotEmpty()){
             // Ordenar la lista por nombre
-            memberArrayList.sortBy { it.name }
+            memberArrayList.sortBy { it.user?.name }
         }
 
         val model = memberArrayList[position]
         val id = model.id.toString()
-        val name = model.name
-        val lastname = model.lastname
+        val name = model.user?.name
+        val lastname = model.user?.lastname
 
         val memberName = context.getString(R.string.member_name, name, lastname)
         holder.tvName.text = memberName

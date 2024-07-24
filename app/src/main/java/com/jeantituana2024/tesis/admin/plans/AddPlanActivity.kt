@@ -194,10 +194,10 @@ class AddPlanActivity : AppCompatActivity() {
 
         val errorMessages = errors.joinToString(separator = "\n") { error ->
             when (error.path[0]) {
-                "name" -> "Name: ${error.message}"
-                "description" -> "Description: ${error.message}"
-                "price" -> "${error.message}"
-                "duration" -> "${error.message}"
+                "name" -> "${error.path[0]}: ${error.message}"
+                "description" -> "${error.path[0]}: ${error.message}"
+                "price" -> "${error.path[0]}: ${error.message}"
+                "duration" -> "${error.path[0]}: ${error.message}"
                 else -> "${error.path[0]}: ${error.message}"
             }
         }

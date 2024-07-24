@@ -12,7 +12,6 @@ import com.jeantituana2024.tesis.models.AttendancesResponse
 import com.jeantituana2024.tesis.models.CheckSessionResponse
 import com.jeantituana2024.tesis.models.CreateUser
 import com.jeantituana2024.tesis.models.DailyAttendancesResponse
-import com.jeantituana2024.tesis.models.DeletePaymentResponse
 import com.jeantituana2024.tesis.models.EarningsByPlanResponse
 import com.jeantituana2024.tesis.models.EarningsResponse
 import com.jeantituana2024.tesis.models.EditProfileRequest
@@ -23,7 +22,6 @@ import com.jeantituana2024.tesis.models.EditUserResponse
 import com.jeantituana2024.tesis.models.EditUserWithImageRequest
 import com.jeantituana2024.tesis.models.LoginResponse
 import com.jeantituana2024.tesis.models.GenericResponse
-import com.jeantituana2024.tesis.models.GetPaymentResponse
 import com.jeantituana2024.tesis.models.InactiveMembersResponse
 import com.jeantituana2024.tesis.models.RegisterRequest
 import com.jeantituana2024.tesis.models.LoginRequest
@@ -45,6 +43,8 @@ import com.jeantituana2024.tesis.models.ProfileResponse
 import com.jeantituana2024.tesis.models.RegisterResponse
 import com.jeantituana2024.tesis.models.ResetPasswordRequest
 import com.jeantituana2024.tesis.models.TotalMembersResponse
+import com.jeantituana2024.tesis.models.UserRequest
+import com.jeantituana2024.tesis.models.UserResponse
 import com.jeantituana2024.tesis.models.UsersResponse
 
 import retrofit2.Call
@@ -78,6 +78,7 @@ interface Api {
     fun viewProfile(
         @Header("Authorization") token: String
     ): Call<ProfileResponse>
+
     @PUT("edit_profile")
     fun editProfile(
         @Header("Authorization") token: String,
@@ -102,6 +103,7 @@ interface Api {
     ): Call<CheckSessionResponse>
 
     //USERS
+
     @GET("users")
     fun getUsers(
         @Header("Authorization") token: String
@@ -110,14 +112,14 @@ interface Api {
     @POST("users")
     fun createUser(
         @Header("Authorization") token: String,
-        @Body user: CreateUser
-    ): Call<RegisterResponse>
+        @Body user: UserRequest
+    ): Call<UserResponse>
 
     @PUT("users/{id}")
     fun editUser(
         @Header("Authorization") token: String,
         @Path("id") userId: String,
-        @Body response: EditUserRequest
+        @Body user: EditUserRequest
     ): Call<EditUserResponse>
 
     @PUT("users/{id}")
@@ -130,8 +132,10 @@ interface Api {
     @GET("users/{id}")
     fun viewUser(
         @Header("Authorization") token: String,
-        @Path("id") userId: String,
+        @Path("id") userId: String
     ): Call<EditUserResponse>
+
+
 
     @DELETE("users/{id}")
     fun deleteUser(
@@ -247,7 +251,7 @@ interface Api {
         @Header("Authorization") token: String,
         @Path("memberId") memberId: String,
         @Path("payId") payId: String,
-    ): Call<GetPaymentResponse>
+    ): Call<PaymentResponse>
 
     @PUT("members/{memberId}/pays/{payId}")
     fun updatePayment(
@@ -255,14 +259,14 @@ interface Api {
         @Path("memberId") memberId: String,
         @Path("payId") payId: String,
         @Body paymentUpdateRequest: PaymentRequest
-    ): Call<GetPaymentResponse>
+    ): Call<PaymentResponse>
 
     @DELETE("members/{memberId}/pays/{payId}")
     fun deletePayment(
         @Header("Authorization") token: String,
         @Path("memberId") memberId: String,
         @Path("payId") payId: String,
-    ): Call<DeletePaymentResponse>
+    ): Call<PaymentResponse>
 
     //KPIs
 

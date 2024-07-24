@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jeantituana2024.tesis.R
-import com.jeantituana2024.tesis.admin.plans.AdapterPlan
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.databinding.RowMemberBinding
@@ -80,17 +79,17 @@ class AdapterMember: RecyclerView.Adapter<AdapterMember.HolderMember>, Filterabl
 
         if(memberArrayList.isNotEmpty()){
             // Ordenar la lista por nombre
-            memberArrayList.sortBy { it.name }
+            memberArrayList.sortBy { it.user?.name }
         }
 
         val model = memberArrayList[position]
         val id = model.id.toString()
-        val name = model.name
-        val lastname = model.lastname
+        val name = model.user?.name
+        val lastname = model.user?.lastname
         val email = model.email
         val inscriptionDate = model.inscriptionDate
-        val gender = model.gender
-        val phone = model.phone
+        val gender = model.user?.gender
+        val phone = model.user?.phone
         val plan = model.plan.name
         val status = model.status
 

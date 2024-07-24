@@ -92,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
                                     "ADMIN" -> {
                                         startActivity(Intent(this@LoginActivity, DashboardAdminActivity::class.java))
                                     }
-                                    "USER" -> {
+                                    "CUSTOMER" -> {
                                         startActivity(Intent(this@LoginActivity, DashboardClientActivity::class.java))
                                     }
                                     "TRAINER" -> {
@@ -148,8 +148,8 @@ class LoginActivity : AppCompatActivity() {
 
         val errorMessages = errors.joinToString(separator = "\n") { error ->
             when (error.path[0]) {
-                "email" -> "${error.message}"
-                "password" -> "Password ${error.message}"
+                "email" -> "${error.path[0]}: ${error.message}"
+                "password" -> "${error.path[0]}: ${error.message}"
                 else -> "${error.path[0]}: ${error.message}"
             }
         }

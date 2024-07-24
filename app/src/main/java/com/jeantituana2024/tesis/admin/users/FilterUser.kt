@@ -25,7 +25,8 @@ class FilterUser: Filter {
             val filteredModels:ArrayList<UserModel> = ArrayList()
 
             for (i in 0 until filterList.size){
-                if(filterList[i].name.uppercase().contains(constraint)){
+                if(filterList[i].name.uppercase().contains(constraint)||
+                    filterList[i].lastname.uppercase().contains(constraint)){
                     filteredModels.add(filterList[i])
                 }
             }

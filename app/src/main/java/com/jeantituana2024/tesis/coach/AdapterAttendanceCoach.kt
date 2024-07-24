@@ -35,7 +35,7 @@ class AdapterAttendanceCoach: RecyclerView.Adapter<AdapterAttendanceCoach.Holder
     private lateinit var binding: RowAttendanceCoachBinding
 
     inner class HolderAttendanceCoach(itemView: View): RecyclerView.ViewHolder(itemView){
-        var tvName: TextView = binding.tvName
+        var tvName: TextView = binding.tvEmail
         var tvDate: TextView = binding.tvDate
     }
 
@@ -56,15 +56,12 @@ class AdapterAttendanceCoach: RecyclerView.Adapter<AdapterAttendanceCoach.Holder
 
         val model = attendanceCoachArrayList[position]
         val date = model.date
-        val name = model.Member.name
-        val lastname = model.Member.lastname
-
-        val memberName = context.getString(R.string.member_name, name, lastname)
+        val email = model.Member.email
 
         // Formatear la fecha antes de asignarla al EditText
         val formattedDate = formatDateString(date)
         holder.tvDate.text = formattedDate
-        holder.tvName.text = memberName
+        holder.tvName.text = email
 
     }
 

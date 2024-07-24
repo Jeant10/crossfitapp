@@ -43,11 +43,27 @@ data class ResetPasswordRequest(
 //MODELS PROFILE
 data class EditProfileWithImageRequest(
     val name: String,
+    val lastname: String,
+    val password: String,
+    val email: String,
+    val phone: String,
+    val emergencyPhone: String,
+    val direction: String,
+    val gender: String,
+    val nacionality: String,
     val image: String?
 )
 
 data class EditProfileRequest(
     val name: String,
+    val lastname: String,
+    val password: String,
+    val email: String,
+    val phone: String,
+    val emergencyPhone: String,
+    val direction: String,
+    val gender: String,
+    val nacionality: String
 )
 
 data class ProfileResponse(
@@ -57,7 +73,7 @@ data class ProfileResponse(
 
 data class EditProfileResponse(
     val success: String,
-    val user: UserLogin
+    val user: UserModel
 )
 
 //MODELS ERROR
@@ -88,19 +104,31 @@ data class UserRegister (
 )
 data class EditUserRequest(
     val name: String,
+    val lastname: String,
+    val password: String,
+    val email: String,
+    val phone: String,
+    val emergencyPhone: String,
+    val direction: String,
+    val gender: String,
+    val nacionality: String,
     val role: String
 )
 
 data class EditUserWithImageRequest(
     val name: String,
+    val lastname: String,
+    val password: String,
+    val email: String,
+    val phone: String,
+    val emergencyPhone: String,
+    val direction: String,
+    val gender: String,
+    val nacionality: String,
     val role: String,
     val image: String?
 )
 
-data class EditUserResponse(
-    val success: String,
-    val user: UserModel
-)
 data class UserLogin(
     val id: String,
     val email: String,
@@ -108,17 +136,51 @@ data class UserLogin(
     val role: String,
     val image: String? // Puede ser null
 )
+
+data class UserRequest(
+    val identification: String,
+    val name: String,
+    val lastname: String,
+    val password: String,
+    val email: String,
+    val phone: String,
+    val emergency_phone: String,
+    val born_date: String,
+    val direction: String,
+    val gender: String,
+    val role: String,
+    val nacionality: String
+)
+data class EditUserResponse(
+    val success: String,
+    val message: String?,
+    val user: UserModel
+)
+data class UserResponse(
+    val success: String,
+    val user: UserRegister,
+    val verificationToken: String
+)
 data class UsersResponse(
     val success: String,
     val user: Map<String, UserModel>
 )
 data class UserModel(
     val id: String,
+    val identification: String,
     val name: String,
+    val lastname: String,
     val email: String,
+    val password: String,
+    val phone: String,
+    val emergencyPhone: String,
+    val bornDate: String,
+    val direction: String,
+    val gender: String,
+    val nacionality: String,
     var status: Boolean,
     val role: String,
-    val emailVerified: String?,
+    val emailVerified: String,
     val image: String?,
     val createdAt: String,
     val updatedAt: String
@@ -156,50 +218,22 @@ data class PlanResponse(
 //MODELS MEMBER
 data class Member(
     val id: Int,
-    val identification: String,
-    val name: String,
-    val lastname: String,
     val email: String,
-    val phone: String,
-    @SerializedName("emergency_phone")
-    val emergencyPhone: String,
-    @SerializedName("born_date")
-    val bornDate: String,
-    val direction: String,
-    @SerializedName("inscription_date")
     val inscriptionDate: String,
     var status: Boolean,
-    val gender: String,
-    val nacionality: String,
     val planId: Int,
-    val plan: Plan,
     val createdAt: String,
-    val updatedAt: String
+    val updatedAt: String,
+    val plan: Plan,
+    val user: UserModel
 )
 
+
 data class MemberRequest(
-    val identification: String,
-    val name: String,
-    val lastname: String,
     val email: String,
-    val phone: String,
-    val emergency_phone: String,
-    val born_date: String,
-    val direction: String,
-    val gender: String,
-    val nacionality: String,
     val planId: Int
 )
 data class MemberUpdateRequest(
-    val identification: String,
-    val name: String,
-    val lastname: String,
-    val phone: String,
-    val emergency_phone: String,
-    val born_date: String,
-    val direction: String,
-    val gender: String,
-    val nacionality: String,
     val planId: Int
 )
 data class MemberResponse(
@@ -228,8 +262,9 @@ data class Attendance(
     val date: String,
     val status: Boolean,
     val createdAt: String,
+    val updatedAt: String,
     val memberId: Int,
-    val updatedAt: String
+    val Member: Member
 )
 
 data class AttendanceCoach(
@@ -268,6 +303,7 @@ data class Payment(
     val date: String,
     var status: Boolean,
     val payment_type: String,
+    val pdfUrl: String?,
     val createdAt: String,
     val memberId: Int,
     val updatedAt: String,
@@ -282,17 +318,7 @@ data class PaymentRequest(
 // Modelo para la respuesta de creación de pago
 data class PaymentResponse(
     val success: String,
-    val attendance: Payment
-)
-
-data class GetPaymentResponse(
-    val success: String,
     val pay: Payment
-)
-
-data class DeletePaymentResponse(
-    val success: String,
-    val plan: Payment
 )
 
 //KPIs

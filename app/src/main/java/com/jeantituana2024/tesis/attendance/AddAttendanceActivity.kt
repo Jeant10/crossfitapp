@@ -164,7 +164,7 @@ class AddAttendanceActivity : AppCompatActivity() {
 
         val errorMessages = errors.joinToString(separator = "\n") { error ->
             when (error.path[0]) {
-                "date" -> "Enter a Date"
+                "date" -> "${error.path[0]}: ${error.message}"
                 else -> "${error.path[0]}: ${error.message}"
             }
         }

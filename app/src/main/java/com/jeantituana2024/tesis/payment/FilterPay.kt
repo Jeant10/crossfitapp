@@ -26,9 +26,8 @@ class FilterPay: Filter {
             val filteredModels: ArrayList<Payment> = ArrayList()
 
             for(i in 0 until filterList.size){
-                if(filterList[i].Member.name.uppercase().contains(constraint) ||
-                    filterList[i].date.uppercase().contains(constraint) ||
-                    filterList[i].Member.lastname.uppercase().contains(constraint)){
+                if(filterList[i].Member.email.uppercase().contains(constraint) ||
+                    filterList[i].date.uppercase().contains(constraint)){
                     filteredModels.add(filterList[i])
                 }
             }

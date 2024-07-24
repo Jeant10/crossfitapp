@@ -20,8 +20,8 @@ import com.jeantituana2024.tesis.R
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.databinding.RowPayBinding
-import com.jeantituana2024.tesis.models.DeletePaymentResponse
 import com.jeantituana2024.tesis.models.Payment
+import com.jeantituana2024.tesis.models.PaymentResponse
 import com.jeantituana2024.tesis.models.SingleErrorResponse
 import com.jeantituana2024.tesis.storage.TokenPreferences
 import retrofit2.Call
@@ -53,7 +53,7 @@ class AdapterPay: RecyclerView.Adapter<AdapterPay.HolderPay>, Filterable {
 
     inner class HolderPay(itemView: View): RecyclerView.ViewHolder(itemView){
 
-        var tvName: TextView = binding.tvName
+        var tvEmail: TextView = binding.tvEmail
         var tvDate: TextView = binding.tvDate
         var tvPlan: TextView = binding.tvPlan
         var tvPay: TextView = binding.tvPay
@@ -85,15 +85,13 @@ class AdapterPay: RecyclerView.Adapter<AdapterPay.HolderPay>, Filterable {
         val model = payArrayList[position]
         val id = model.id.toString()
         val memberId = model.memberId.toString()
-        val name = model.Member.name
-        val lastname = model.Member.lastname
+        val email = model.Member.email
         val date = model.date
         val plan = model.Member.plan.name
         val pay = model.payment_type
         val status = model.status
 
-        val memberName = context.getString(R.string.member_name, name, lastname)
-        holder.tvName.text = memberName
+        holder.tvEmail.text = email
         // Formatear la fecha antes de asignarla al EditText
         val formattedDate = formatDateString(date)
         holder.tvDate.text = formattedDate
@@ -131,10 +129,10 @@ class AdapterPay: RecyclerView.Adapter<AdapterPay.HolderPay>, Filterable {
 
             val call = RetrofitClient.instance.deletePayment("Bearer $token", memberId, payId)
 
-            call.enqueue(object : Callback<DeletePaymentResponse>{
+            call.enqueue(object : Callback<PaymentResponse>{
                 override fun onResponse(
-                    p0: Call<DeletePaymentResponse>,
-                    response: Response<DeletePaymentResponse>
+                    p0: Call<PaymentResponse>,
+                    response: Response<PaymentResponse>
                 ) {
                     if (response.isSuccessful) {
                         progressDialog.dismiss()
@@ -176,7 +174,7 @@ class AdapterPay: RecyclerView.Adapter<AdapterPay.HolderPay>, Filterable {
                     }
                 }
 
-                override fun onFailure(p0: Call<DeletePaymentResponse>, t: Throwable) {
+                override fun onFailure(p0: Call<PaymentResponse>, t: Throwable) {
                     progressDialog.dismiss()
                     showToast("Error de red: ${t.message}")
                     switch.isChecked = model.status

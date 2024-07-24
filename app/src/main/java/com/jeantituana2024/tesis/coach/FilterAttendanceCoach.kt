@@ -27,8 +27,7 @@ class FilterAttendanceCoach: Filter {
 
             for(i in 0 until filterList.size){
                 if(filterList[i].date.uppercase().contains(constraint) ||
-                    filterList[i].Member.name.uppercase().contains(constraint) ||
-                    filterList[i].Member.lastname.uppercase().contains(constraint)){
+                    filterList[i].Member.email.uppercase().contains(constraint)){
                     filteredModels.add(filterList[i])
                 }
             }

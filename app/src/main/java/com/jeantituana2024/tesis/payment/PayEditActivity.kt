@@ -16,8 +16,8 @@ import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.databinding.ActivityPayEditBinding
 import com.jeantituana2024.tesis.models.ErrorDetail
 import com.jeantituana2024.tesis.models.ErrorResponse
-import com.jeantituana2024.tesis.models.GetPaymentResponse
 import com.jeantituana2024.tesis.models.PaymentRequest
+import com.jeantituana2024.tesis.models.PaymentResponse
 import com.jeantituana2024.tesis.models.SingleErrorResponse
 import com.jeantituana2024.tesis.storage.TokenPreferences
 import retrofit2.Call
@@ -89,10 +89,10 @@ class PayEditActivity : AppCompatActivity() {
 
             val call = RetrofitClient.instance.getPayment("Bearer $token", memberId, payId)
 
-            call.enqueue(object: Callback<GetPaymentResponse>{
+            call.enqueue(object: Callback<PaymentResponse>{
                 override fun onResponse(
-                    p0: Call<GetPaymentResponse>,
-                    response: Response<GetPaymentResponse>
+                    p0: Call<PaymentResponse>,
+                    response: Response<PaymentResponse>
                 ) {
                     if (response.isSuccessful) {
                         progressDialog.dismiss()
@@ -128,7 +128,7 @@ class PayEditActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(p0: Call<GetPaymentResponse>, p1: Throwable) {
+                override fun onFailure(p0: Call<PaymentResponse>, p1: Throwable) {
                     progressDialog.dismiss()
                     showToast("Error de conexión: ${p1.message}")
                 }
@@ -164,10 +164,10 @@ class PayEditActivity : AppCompatActivity() {
 
             val call = RetrofitClient.instance.updatePayment("Bearer $token",memberId, payId, editRequest)
 
-            call.enqueue(object: Callback<GetPaymentResponse>{
+            call.enqueue(object: Callback<PaymentResponse>{
                 override fun onResponse(
-                    p0: Call<GetPaymentResponse>,
-                    response: Response<GetPaymentResponse>
+                    p0: Call<PaymentResponse>,
+                    response: Response<PaymentResponse>
                 ) {
                     if (response.isSuccessful) {
                         progressDialog.dismiss()
@@ -214,7 +214,7 @@ class PayEditActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(p0: Call<GetPaymentResponse>, p1: Throwable) {
+                override fun onFailure(p0: Call<PaymentResponse>, p1: Throwable) {
                     progressDialog.dismiss()
                     showToast("Error de conexión: ${p1.message}")
                 }
@@ -314,8 +314,8 @@ class PayEditActivity : AppCompatActivity() {
 
         val errorMessages = errors.joinToString(separator = "\n") { error ->
             when (error.path[0]) {
-                "date" -> "${error.message}"
-                "payment_type" -> "${error.message}"
+                "date" -> "${error.path[0]}: ${error.message}"
+                "payment_type" -> "${error.path[0]}: ${error.message}"
                 else -> "${error.path[0]}: ${error.message}"
             }
         }

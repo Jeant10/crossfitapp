@@ -84,12 +84,13 @@ class AdapterUser: RecyclerView.Adapter<AdapterUser.HolderUser>, Filterable{
         val model = userArrayList[position]
         val id = model.id
         val name = model.name
+        val lastname = model.lastname
         val email = model.email
         val role = model.role
         val image = model.image
         val status = model.status
-
-        holder.nameTv.text = name
+        val memberName = context.getString(R.string.member_name, name, lastname)
+        holder.nameTv.text = memberName
         holder.emailTv.text = email
         holder.typeuserTv.text = role
 

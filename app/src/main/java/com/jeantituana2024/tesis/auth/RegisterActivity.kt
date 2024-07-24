@@ -1,9 +1,11 @@
 package com.jeantituana2024.tesis.auth
 
+import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.databinding.ActivityRegisterBinding
@@ -17,6 +19,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jeantituana2024.tesis.models.ErrorDetail
 import com.jeantituana2024.tesis.models.RegisterResponse
+import java.util.Calendar
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -33,8 +36,14 @@ class RegisterActivity : AppCompatActivity() {
         progressDialog.setTitle("Espere porfavor")
         progressDialog.setCanceledOnTouchOutside(false)
 
+        setupGenderSelection()
+
         binding.backBtn.setOnClickListener{
             onBackPressed()
+        }
+
+        binding.bornDateEt.setOnClickListener {
+            showDatePickerDialog()
         }
 
         binding.registerBtn.setOnClickListener {
@@ -42,23 +51,34 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    private var identification = ""
     private var name = ""
+    private var lastname = ""
     private var email = ""
-    private var password = ""
+    private var password=""
+    private var telefono = ""
+    private var emergencyPhone = ""
+    private var dateBorn = ""
+    private var direction = ""
+    private var gender = ""
+    private var nationality = ""
 
 
     private fun validateData(){
 
+        identification = binding.identificationEt.text.toString().trim()
         name = binding.nameEt.text.toString().trim()
+        lastname = binding.lastnameEt.text.toString().trim()
         email = binding.emailEt.text.toString().trim()
         password = binding.passwordEt.text.toString().trim()
-        val cPassword = binding.cPasswordEt.text.toString().trim()
+        telefono = binding.phoneEt.text.toString().trim()
+        emergencyPhone = binding.emergencyPhoneEt.text.toString().trim()
+        dateBorn = binding.bornDateEt.text.toString().trim()
+        direction = binding.directionEt.text.toString().trim()
+        gender = getSelectedGender()
+        nationality = binding.spinner.selectedItem.toString().trim()
 
-        if (password != cPassword) {
-            showToast("Las contraseñas no coinciden")
-        }else{
-            registerUser()
-        }
+        registerUser()
 
     }
 
@@ -78,7 +98,7 @@ class RegisterActivity : AppCompatActivity() {
                     val registerResponse = response.body()
 
                     registerResponse?.let {
-                        if (it.success == "Successfully Register") {
+                        if (it.success == "Successfully Registered") {
                             // Redirigir a LoginActivity
                             showToast("Registro exitoso")
                             startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
@@ -118,19 +138,60 @@ class RegisterActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun setupGenderSelection() {
+        binding.genderRg.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                com.jeantituana2024.tesis.R.id.maleRb -> Log.d("Género seleccionado","M")
+                com.jeantituana2024.tesis.R.id.femaleRb -> Log.d("Género seleccionado","F")
+            }
+        }
+    }
     private fun handleValidationErrors(errors: List<ErrorDetail>) {
 
         val errorMessages = errors.joinToString(separator = "\n") { error ->
             when (error.path[0]) {
-                "email" -> "${error.message}"
-                "password" -> "${error.message}"
-                "name" -> "${error.message}"
+                "identification" -> "${error.path[0]}: ${error.message}"
+                "name" -> "${error.path[0]}: ${error.message}"
+                "lastname" -> "${error.path[0]}: ${error.message}"
+                "email" -> "${error.path[0]}: ${error.message}"
+                "password" -> "${error.path[0]}: ${error.message}"
+                "phone" -> "${error.path[0]}: ${error.message}"
+                "emergency_phone" -> "${error.path[0]}: ${error.message}"
+                "born_date" -> "${error.message}"
+                "direction" -> "${error.path[0]}: ${error.message}"
+                "gender" -> "${error.path[0]}: ${error.message}"
+                "nacionality" -> "${error.path[0]}: ${error.message}"
                 else -> "${error.path[0]}: ${error.message}"
             }
         }
         showToast(errorMessages)
     }
 
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val formattedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
+                binding.bornDateEt.setText(formattedDate)
+            },
+            year, month, day
+        )
+        datePickerDialog.show()
+    }
+
+    private fun getSelectedGender(): String {
+        return when (binding.genderRg.checkedRadioButtonId) {
+            com.jeantituana2024.tesis.R.id.maleRb -> "M"
+            com.jeantituana2024.tesis.R.id.femaleRb -> "F"
+            else -> ""
+        }
+    }
     private fun showToast(message: String) {
         Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
     }

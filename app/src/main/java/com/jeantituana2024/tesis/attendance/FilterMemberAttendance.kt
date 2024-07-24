@@ -26,9 +26,9 @@ class FilterMemberAttendance: Filter {
             val filteredModels: ArrayList<Member> = ArrayList()
 
             for(i in 0 until filterList.size){
-                if(filterList[i].name.uppercase().contains(constraint)
+                if(filterList[i].user.name.uppercase().contains(constraint)
                     ||
-                    filterList[i].lastname.uppercase().contains(constraint)){
+                    filterList[i].user.lastname.uppercase().contains(constraint)){
                     filteredModels.add(filterList[i])
                 }
             }

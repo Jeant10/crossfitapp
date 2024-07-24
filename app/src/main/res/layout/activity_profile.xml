@@ -39,47 +39,6 @@
 
     </View>
 
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/toolbarRl"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:background="@drawable/shape_toolbar02"-->
-<!--        android:layout_height="?actionBarSize">-->
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/backBtn"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_marginStart="10dp"-->
-<!--            android:background="@android:color/transparent"-->
-<!--            android:src="@drawable/ic_back_white">-->
-
-<!--        </ImageButton>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/titleTv"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:text="Perfil"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textStyle="bold">-->
-
-<!--        </TextView>-->
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/profileEditBtn"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_marginEnd="10dp"-->
-<!--            android:background="@android:color/transparent"-->
-<!--            android:src="@drawable/ic_edit_white">-->
-
-<!--        </ImageButton>-->
-
-<!--    </RelativeLayout>-->
 
     <View
         android:layout_width="match_parent"
@@ -111,7 +70,7 @@
         android:text="Nombre completo"
         android:layout_centerHorizontal="true"
         android:textColor="@color/black"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:textStyle="bold">
 
     </TextView>
@@ -129,79 +88,321 @@
     </TextView>
 
 
-
-    <LinearLayout
-        android:id="@+id/detailsLl"
+    <!-- ScrollView for Form Inputs -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/idTv"
-        android:layout_marginTop="8dp">
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="290dp">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/detailsLl"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_below="@id/idTv"
+            android:layout_marginTop="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Correo"
-                android:textColor="@color/black"
-                android:textStyle="bold">
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
 
-            </TextView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Identificación"
+                    android:textColor="@color/black"
+                    android:textStyle="bold">
+                </TextView>
 
-            <TextView
-                android:id="@+id/emailTv"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/identificationTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1724240232"
+                    android:textColor="@color/black">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="N/A"
-                android:textColor="@color/black">
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
 
-            </TextView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Correo"
+                    android:textColor="@color/black"
+                    android:textStyle="bold">
+                </TextView>
 
+                <TextView
+                    android:id="@+id/emailTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="abc@hotmail.com"
+                    android:textColor="@color/black">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Teléfono"
+                    android:textColor="@color/black"
+                    android:textStyle="bold">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/phoneTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0957435343"
+                    android:textColor="@color/black">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Teléfono de emergencia"
+                    android:textColor="@color/black"
+                    android:textStyle="bold">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/emergencyPhoneTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="229524387"
+                    android:textColor="@color/black">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Fecha de nacimiento"
+                    android:textColor="@color/black"
+                    android:textStyle="bold">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/bornDateTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="2004-07-14"
+                    android:textColor="@color/black">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Dirección"
+                    android:textColor="@color/black"
+                    android:textStyle="bold">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/directionTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Real Audiencia y Luis Tufiño"
+                    android:textColor="@color/black">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Género"
+                    android:textColor="@color/black"
+                    android:textStyle="bold">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/genderTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="F"
+                    android:textColor="@color/black">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Nacionalidad"
+                    android:textColor="@color/black"
+                    android:textStyle="bold">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/nacionalityTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Extranjero"
+                    android:textColor="@color/black">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Estado"
+                    android:textColor="@color/black"
+                    android:textStyle="bold">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/statusTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Activo"
+                    android:textColor="@color/black">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Rol"
+                    android:textColor="@color/black"
+                    android:textStyle="bold">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/roleTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ADMIN"
+                    android:textColor="@color/black">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Correo Verificado"
+                    android:textColor="@color/black"
+                    android:textStyle="bold">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/emailVerifiedTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="2024-07-23"
+                    android:textColor="@color/black">
+                </TextView>
+            </LinearLayout>
         </LinearLayout>
-        <!--Account-->
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cuenta"
-                android:textColor="@color/black"
-                android:textStyle="bold">
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/accountTypeTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="N/A"
-                android:textColor="@color/black">
-
-            </TextView>
-
-        </LinearLayout>
+    </ScrollView>
 
 
-    </LinearLayout>
 
     <View
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:background="@color/gray03"
-        android:layout_below="@id/detailsLl">
+        android:layout_below="@id/idTv">
 
     </View>
 

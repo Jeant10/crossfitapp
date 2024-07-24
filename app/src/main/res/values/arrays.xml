@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="options">
-        <item>USER</item>
-        <item>TRAINER</item>
         <item>ADMIN</item>
+        <item>TRAINER</item>
+        <item>CUSTOMER</item>
     </string-array>
 
     <string-array name="nationality">
@@ -14,7 +14,6 @@
     <string-array name="typePay">
         <item>Efectivo</item>
         <item>Transferencia</item>
-        <item>Tarjeta</item>
     </string-array>
 
 </resources>

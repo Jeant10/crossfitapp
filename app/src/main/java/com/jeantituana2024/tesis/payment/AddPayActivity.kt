@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.jeantituana2024.tesis.R
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.databinding.ActivityAddPayBinding
@@ -176,7 +177,7 @@ class AddPayActivity : AppCompatActivity() {
 
     private fun setupMemberSpinner() {
         // Obtener los nombres de los miembros para mostrar en el Spinner
-        val memberNames = memberArrayList.map { it.name }
+        val memberNames = memberArrayList.map { getString(R.string.member_name, it.user.name, it.user.lastname) }
 
         // Configurar el Adapter para el Spinner
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, memberNames)
@@ -201,8 +202,8 @@ class AddPayActivity : AppCompatActivity() {
 
         val errorMessages = errors.joinToString(separator = "\n") { error ->
             when (error.path[0]) {
-                "date" -> "Enter a Date"
-                "payment_type" -> "${error.message}"
+                "date" -> "${error.path[0]}: ${error.message}"
+                "payment_type" -> "${error.path[0]}: ${error.message}"
                 else -> "${error.path[0]}: ${error.message}"
             }
         }

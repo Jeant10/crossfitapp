@@ -34,7 +34,7 @@ import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
 
-class MemberEditActivity : AppCompatActivity() {
+class  MemberEditActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMemberEditBinding
     private lateinit var progressDialog: ProgressDialog
@@ -72,15 +72,9 @@ class MemberEditActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        setupGenderSelection()
-
         // Configurar el comportamiento del botón de regreso
         binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
-        }
-
-        binding.bornDateEt.setOnClickListener {
-            showDatePickerDialog()
         }
 
         binding.updateBtn.setOnClickListener {
@@ -88,30 +82,8 @@ class MemberEditActivity : AppCompatActivity() {
         }
     }
 
-    private var identification = ""
-    private var name = ""
-    private var apellido = ""
-    private var telefono = ""
-    private var emergencyPhone = ""
-    private var dateBorn = ""
-    private var direction = ""
-    private var gender = ""
-    private var nationality = ""
-
     private fun getData() {
-
-        identification = binding.identificationEt.text.toString().trim()
-        name = binding.nameEt.text.toString().trim()
-        apellido = binding.lastnameEt.text.toString().trim()
-        telefono = binding.phoneEt.text.toString().trim()
-        emergencyPhone = binding.emergencyPhoneEt.text.toString().trim()
-        dateBorn = binding.bornDateEt.text.toString().trim()
-        direction = binding.directionEt.text.toString().trim()
-        gender = getSelectedGender()
-        nationality = binding.spinner.selectedItem.toString().trim()
-
         updateMember()
-
     }
 
     private fun loadMember(memberId: String) {
@@ -132,23 +104,6 @@ class MemberEditActivity : AppCompatActivity() {
 
                         if (memberResponse != null) {
 
-                            binding.identificationEt.setText(memberResponse.identification)
-                            binding.nameEt.setText(memberResponse.name)
-                            binding.lastnameEt.setText(memberResponse.lastname)
-                            binding.phoneEt.setText(memberResponse.phone)
-                            binding.emergencyPhoneEt.setText(memberResponse.emergencyPhone)
-                            // Formatear la fecha antes de asignarla al EditText
-                            val formattedDate = formatDateString(memberResponse.bornDate)
-                            binding.bornDateEt.setText(formattedDate)
-                            // Actualiza la variable selectedDate
-                            updateSelectedDate(formattedDate)
-
-                            binding.directionEt.setText(memberResponse.direction)
-
-
-                            val genderResponse = memberResponse.gender
-                            binding.genderRg.check(if (genderResponse == "M") R.id.maleRb else R.id.femaleRb)
-
                             val planIdResponse = memberResponse.planId
                             // Configurar plan
                             val planPosition = getPlanIndex(planIdResponse)
@@ -156,16 +111,6 @@ class MemberEditActivity : AppCompatActivity() {
                                 binding.planSpinner.setSelection(planPosition)
                             } else {
                                 showToast("El plan del miembro no es válido")
-                            }
-
-                            // Configurar nacionalidad
-                            val nationalityResponse = memberResponse.nacionality
-                            val nationalities = resources.getStringArray(R.array.nationality)
-                            val nationalityPosition = nationalities.indexOf(nationalityResponse)
-                            if (nationalityPosition >= 0) {
-                                binding.spinner.setSelection(nationalityPosition)
-                            } else {
-                                showToast("La nacionalidad del miembro no es válida")
                             }
 
                         }
@@ -204,7 +149,7 @@ class MemberEditActivity : AppCompatActivity() {
 
         if (token != null) {
 
-            val editRequest = MemberUpdateRequest(identification,name,apellido,telefono,emergencyPhone,dateBorn,direction,gender,nationality,selectedPlanId)
+            val editRequest = MemberUpdateRequest(selectedPlanId)
             val call = RetrofitClient.instance.updateMember("Bearer $token", memberId, editRequest)
 
             call.enqueue(object: Callback<MemberResponse>{
@@ -307,15 +252,7 @@ class MemberEditActivity : AppCompatActivity() {
 
         val errorMessages = errors.joinToString(separator = "\n") { error ->
             when (error.path[0]) {
-                "name" -> "Name: ${error.message}"
-                "lastname" -> "Last Name: ${error.message}"
-                "phone" -> "Phone: ${error.message}"
-                "emergency_phone" -> "Emergency Phone: ${error.message}"
-                "born_date" -> "Enter a Date"
-                "direction" -> "Direction: ${error.message}"
-                "gender" -> "Choose a gender: M or F"
-                "nacionality" -> "${error.message}"
-                "planId" -> "${error.message}"
+                "planId" -> "${error.path[0]}: ${error.message}"
                 else -> "${error.path[0]}: ${error.message}"
             }
         }
@@ -342,53 +279,6 @@ class MemberEditActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>) {
                 // No hacer nada si no se selecciona nada
             }
-        }
-    }
-
-    // Método para actualizar la variable selectedDate
-    private fun updateSelectedDate(dateString: String) {
-        try {
-            val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val date = format.parse(dateString)
-            selectedDate.time = date
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    private fun showDatePickerDialog() {
-        val year = selectedDate.get(Calendar.YEAR)
-        val month = selectedDate.get(Calendar.MONTH)
-        val day = selectedDate.get(Calendar.DAY_OF_MONTH)
-
-        val datePickerDialog = DatePickerDialog(
-            this,
-            { _, selectedYear, selectedMonth, selectedDay ->
-                val formattedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
-                binding.bornDateEt.setText(formattedDate)
-
-                // Actualiza selectedDate con la nueva fecha seleccionada
-                selectedDate.set(selectedYear, selectedMonth, selectedDay)
-            },
-            year, month, day
-        )
-        datePickerDialog.show()
-    }
-
-    private fun setupGenderSelection() {
-        binding.genderRg.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.maleRb -> Log.d("Género seleccionado","M")
-                R.id.femaleRb -> Log.d("Género seleccionado","F")
-            }
-        }
-    }
-
-    private fun getSelectedGender(): String {
-        return when (binding.genderRg.checkedRadioButtonId) {
-            R.id.maleRb -> "M"
-            R.id.femaleRb -> "F"
-            else -> ""
         }
     }
 
@@ -439,26 +329,6 @@ class MemberEditActivity : AppCompatActivity() {
             }
         }
         return -1 // Si no se encuentra el plan
-    }
-
-    private fun formatDateString(dateString: String): String {
-        return try {
-            // Define el formato original de la fecha
-            val originalFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-            originalFormat.timeZone = TimeZone.getTimeZone("UTC") // Asegurar que sea interpretado como UTC
-
-            // Parsear la fecha en el formato original
-            val date = originalFormat.parse(dateString)
-
-            // Define el nuevo formato de la fecha
-            val desiredFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            desiredFormat.timeZone = TimeZone.getTimeZone("UTC") // Mantener la salida en UTC
-            // Formatear la fecha al nuevo formato y devolverla
-            desiredFormat.format(date)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            dateString // En caso de error, devolver el string original
-        }
     }
 
     private fun showToast(message: String) {

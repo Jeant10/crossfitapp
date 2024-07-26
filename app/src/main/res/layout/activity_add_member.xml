@@ -71,7 +71,7 @@
                     android:id="@+id/userLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Correo del Usuario:"
+                    android:text="Usuario:"
                     android:textStyle="bold"
                     android:textColor="@color/gray02"
                     android:textSize="14sp"
@@ -79,7 +79,7 @@
 
                 <Spinner
                     android:id="@+id/userSpinner"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/userLabel"

@@ -2,27 +2,38 @@ package com.jeantituana2024.tesis.payment
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Application
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts
+import com.google.android.gms.tasks.Task
+import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jeantituana2024.tesis.R
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.databinding.ActivityAddPayBinding
+import com.jeantituana2024.tesis.models.EditProfileRequest
+import com.jeantituana2024.tesis.models.EditProfileWithImageRequest
 import com.jeantituana2024.tesis.models.ErrorDetail
 import com.jeantituana2024.tesis.models.ErrorResponse
 import com.jeantituana2024.tesis.models.Member
 import com.jeantituana2024.tesis.models.MembersResponse
 import com.jeantituana2024.tesis.models.PaymentRequest
+import com.jeantituana2024.tesis.models.PaymentRequestWithPdf
 import com.jeantituana2024.tesis.models.PaymentResponse
 import com.jeantituana2024.tesis.models.SingleErrorResponse
 import com.jeantituana2024.tesis.storage.TokenPreferences
@@ -37,14 +48,13 @@ class AddPayActivity : AppCompatActivity() {
     private lateinit var tokenPreferences: TokenPreferences
     private lateinit var progressDialog: ProgressDialog
     private lateinit var memberArrayList: ArrayList<Member>
+    private var pdfUri: Uri?= null
     private var selectedMemberId: Int = 0
-
+    private var selectedDate: Calendar = Calendar.getInstance() // Variable para almacenar la fecha seleccionada
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddPayBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        progressDialog = ProgressDialog(this)
 
         progressDialog = ProgressDialog(this)
         progressDialog.setTitle("Espere Porfavor")
@@ -73,6 +83,10 @@ class AddPayActivity : AppCompatActivity() {
             showDatePickerDialog()
         }
 
+        binding.pdfEt.setOnClickListener {
+            pdfPickIntent()
+        }
+
         binding.submitBtn.setOnClickListener {
             validateData()
         }
@@ -86,10 +100,16 @@ class AddPayActivity : AppCompatActivity() {
         date = binding.dateEt.text.toString().trim()
         typePay = binding.spinner.selectedItem.toString().trim()
 
-        registerPay()
+        if(pdfUri==null){
+            registerPay("")
+        }
+        else{
+            uploadPdfToStorage()
+        }
+
     }
 
-    private fun registerPay() {
+    private fun registerPay(pdfUrl: String) {
 
         progressDialog.setMessage("Creando pago...")
         progressDialog.show()
@@ -97,9 +117,18 @@ class AddPayActivity : AppCompatActivity() {
         val token = tokenPreferences.getToken()
         val memberId = selectedMemberId.toString()
 
-        val payData = PaymentRequest(date,typePay)
+        val payData: Any
 
-        val call = RetrofitClient.instance.createPayment("Bearer $token", memberId, payData)
+        val call = when {
+            pdfUri != null -> {
+                payData = PaymentRequestWithPdf(date,typePay,pdfUrl)
+                RetrofitClient.instance.createPaymentWithPdf("Bearer $token", memberId, payData as PaymentRequestWithPdf)
+            }
+            else -> {
+                payData = PaymentRequest(date,typePay)
+                RetrofitClient.instance.createPayment("Bearer $token", memberId, payData as PaymentRequest)
+            }
+        }
 
         call.enqueue(object : Callback<PaymentResponse>{
             override fun onResponse(p0: Call<PaymentResponse>, response: Response<PaymentResponse>) {
@@ -159,6 +188,32 @@ class AddPayActivity : AppCompatActivity() {
         })
     }
 
+    private fun uploadPdfToStorage(){
+
+        progressDialog.setMessage("Subiendo pdf..")
+        progressDialog.show()
+
+        val timestamp = System.currentTimeMillis()
+
+        val filePathAndName = "Pays/$timestamp.pdf"
+
+        val storageReference = FirebaseStorage.getInstance().getReference(filePathAndName)
+        storageReference.putFile(pdfUri!!)
+            .addOnSuccessListener {taskSnapshot->
+                val uriTask: Task<Uri> = taskSnapshot.storage.downloadUrl
+                while (!uriTask.isSuccessful);
+
+                val uploadedPdfUrl = "${uriTask.result}"
+
+                registerPay(uploadedPdfUrl)
+
+            }
+            .addOnFailureListener{e->
+                progressDialog.dismiss()
+                showToast("Fallido al subir el pdf por: ${e.message}")
+            }
+    }
+
     // Función para mostrar una alerta de sesión expirada y redirigir al LoginActivity
     private fun showSessionExpiredAlert() {
         val builder = AlertDialog.Builder(this)
@@ -211,16 +266,18 @@ class AddPayActivity : AppCompatActivity() {
     }
 
     private fun showDatePickerDialog() {
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val year = selectedDate.get(Calendar.YEAR)
+        val month = selectedDate.get(Calendar.MONTH)
+        val day = selectedDate.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(
             this,
             { _, selectedYear, selectedMonth, selectedDay ->
                 val formattedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
                 binding.dateEt.setText(formattedDate)
+
+                // Actualiza selectedDate con la nueva fecha seleccionada
+                selectedDate.set(selectedYear, selectedMonth, selectedDay)
             },
             year, month, day
         )
@@ -286,6 +343,42 @@ class AddPayActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun pdfPickIntent(){
+
+        val intent = Intent()
+        intent.type = "application/pdf"
+        intent.action = Intent.ACTION_GET_CONTENT
+        pdfActivityResultLauncher.launch(intent)
+    }
+
+    private val pdfActivityResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        ActivityResultCallback<ActivityResult>{ result->
+            if(result.resultCode == RESULT_OK){
+                pdfUri = result.data!!.data
+                val pdfFileName = pdfUri?.let { getFileNameFromUri(it) }
+                binding.pdfEt.setText(pdfFileName)
+            }
+            else{
+                showToast("Cancelled")
+            }
+        }
+    )
+
+    private fun getFileNameFromUri(uri: Uri): String {
+        var fileName = ""
+        val cursor = contentResolver.query(uri, null, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                if (nameIndex != -1) {
+                    fileName = it.getString(nameIndex)
+                }
+            }
+        }
+        return fileName
     }
 
     private fun showToast(message: String) {

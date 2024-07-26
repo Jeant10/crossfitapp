@@ -19,6 +19,11 @@
             android:title="Asistencias">
         </item>
 
+        <item
+            android:id="@+id/nav_plans"
+            android:icon="@drawable/ic_attendance_gray"
+            android:title="Planes">
+        </item>
 
     </group>
 

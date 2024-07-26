@@ -66,16 +66,14 @@
                     android:id="@+id/identificationEt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/shape_edittext01"
                     android:drawableStart="@drawable/ic_person_gray"
                     android:drawablePadding="10dp"
                     android:hint="Identificación"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:padding="10dp"
-                    android:textColorHint="@color/gray01"
-                    android:enabled="false"
-                    android:focusable="false"
-                    android:clickable="false"
-                    style="@style/DisabledEditTextStyle"/>
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray01"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -151,38 +149,12 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/passwordTil"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/emailTil"
-                android:layout_marginTop="5dp"
-                app:passwordToggleEnabled="true"
-                app:hintEnabled="false">
 
-                <EditText
-                    android:id="@+id/passwordEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/shape_edittext01"
-                    android:drawableStart="@drawable/ic_lock_gray"
-                    android:drawablePadding="10dp"
-                    android:hint="Contraseña"
-                    android:inputType="textPassword"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray01">
-
-                </EditText>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Phone -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/phoneTil"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/passwordTil"
+                android:layout_below="@id/emailTil"
                 android:layout_marginTop="5dp"
                 app:hintEnabled="false">
 
@@ -234,6 +206,10 @@
                 android:layout_marginTop="5dp"
                 app:hintEnabled="false">
 
+<!--                android:background="@drawable/shape_edittext01"-->
+<!--                android:focusable="false"-->
+<!--                android:clickable="true"-->
+<!--                android:textColorHint="@color/gray01"-->
                 <EditText
                     android:id="@+id/bornDateEt"
                     android:layout_width="match_parent"
@@ -245,10 +221,12 @@
                     android:maxLines="1"
                     android:padding="10dp"
                     android:textColor="@color/black"
+
                     android:textColorHint="@color/gray01"
-                    android:enabled="false"
                     android:focusable="false"
                     android:clickable="false"
+
+                    android:enabled="false"
                     style="@style/DisabledEditTextStyle"/>
 
             </com.google.android.material.textfield.TextInputLayout>

@@ -32,6 +32,7 @@ import com.jeantituana2024.tesis.models.MembersResponse
 import com.jeantituana2024.tesis.models.MonthlyAttendancesResponse
 import com.jeantituana2024.tesis.models.MonthlyEarningsResponse
 import com.jeantituana2024.tesis.models.PaymentRequest
+import com.jeantituana2024.tesis.models.PaymentRequestWithPdf
 import com.jeantituana2024.tesis.models.PaymentResponse
 import com.jeantituana2024.tesis.models.PaymentsResponse
 import com.jeantituana2024.tesis.models.PaymentsResponseUser
@@ -246,6 +247,13 @@ interface Api {
         @Body paymentRequest: PaymentRequest
     ): Call<PaymentResponse>
 
+    @POST("members/{id}/pays")
+    fun createPaymentWithPdf(
+        @Header("Authorization") token: String,
+        @Path("id") memberId: String,
+        @Body paymentRequest: PaymentRequestWithPdf
+    ): Call<PaymentResponse>
+
     @GET("members/{memberId}/pays/{payId}")
     fun getPayment(
         @Header("Authorization") token: String,
@@ -261,6 +269,13 @@ interface Api {
         @Body paymentUpdateRequest: PaymentRequest
     ): Call<PaymentResponse>
 
+    @PUT("members/{memberId}/pays/{payId}")
+    fun updatePaymentWithPdf(
+        @Header("Authorization") token: String,
+        @Path("memberId") memberId: String,
+        @Path("payId") payId: String,
+        @Body paymentUpdateRequest: PaymentRequestWithPdf
+    ): Call<PaymentResponse>
     @DELETE("members/{memberId}/pays/{payId}")
     fun deletePayment(
         @Header("Authorization") token: String,

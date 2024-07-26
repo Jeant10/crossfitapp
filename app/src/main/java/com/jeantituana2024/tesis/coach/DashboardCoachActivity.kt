@@ -28,6 +28,8 @@ import com.jeantituana2024.tesis.ProfileActivity
 import com.jeantituana2024.tesis.R
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.auth.LoginActivity
+import com.jeantituana2024.tesis.client.plans.PlansClientFragment
+import com.jeantituana2024.tesis.coach.attendances.AttendancesCoachFragment
 import com.jeantituana2024.tesis.models.GenericResponse
 import com.jeantituana2024.tesis.models.SingleErrorResponse
 import com.jeantituana2024.tesis.storage.TokenPreferences
@@ -122,6 +124,12 @@ class DashboardCoachActivity : AppCompatActivity(), NavigationView.OnNavigationI
                 openFragment(AttendancesCoachFragment())
                 supportActionBar?.title = "Asistencias"
                 Log.d("Navigation", "attendances selected")
+            }
+
+            R.id.nav_plans -> {
+                openFragment(PlansClientFragment())
+                supportActionBar?.title = "Planes"
+                Log.d("Navigation", "plans selected")
             }
 
             R.id.nav_profile -> {

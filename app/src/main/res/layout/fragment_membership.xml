@@ -11,11 +11,11 @@
         android:id="@+id/membership"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:layout_marginBottom="5dp"
+        android:layout_margin="5dp"
         app:cardBackgroundColor="@color/white"
         android:visibility="visible"
         app:cardCornerRadius="5dp"
-        app:cardElevation="2dp"
+        app:cardElevation="5dp"
         app:contentPadding="5dp">
 
         <RelativeLayout

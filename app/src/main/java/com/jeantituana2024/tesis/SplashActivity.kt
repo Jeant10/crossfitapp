@@ -61,7 +61,7 @@ class SplashActivity : AppCompatActivity() {
                                         "ADMIN" -> {
                                             startActivity(Intent(this@SplashActivity, DashboardAdminActivity::class.java))
                                         }
-                                        "USER" -> {
+                                        "CUSTOMER" -> {
                                             startActivity(Intent(this@SplashActivity, DashboardClientActivity::class.java))
                                         }
                                         "TRAINER" -> {

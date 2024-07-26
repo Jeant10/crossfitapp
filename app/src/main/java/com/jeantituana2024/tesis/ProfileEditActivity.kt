@@ -29,6 +29,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jeantituana2024.tesis.api.RetrofitClient
+import com.jeantituana2024.tesis.auth.ChangePasswordActivity
 import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.databinding.ActivityProfileEditBinding
 import com.jeantituana2024.tesis.models.EditProfileRequest
@@ -98,6 +99,11 @@ class ProfileEditActivity : AppCompatActivity() {
             checkPermission()
         }
 
+        binding.changePasswordBtn.setOnClickListener {
+            val intent = Intent(this, ChangePasswordActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.updateBtn.setOnClickListener {
             validateData()
         }
@@ -125,10 +131,10 @@ class ProfileEditActivity : AppCompatActivity() {
                         val userResponse = response.body()?.user
                         if (userResponse != null) {
 
+                            binding.identificationEt.setText(userResponse.identification)
                             binding.nameEt.setText(userResponse.name)
                             binding.lastnameEt.setText(userResponse.lastname)
                             binding.emailEt.setText(userResponse.email)
-                            binding.passwordEt.setText(userResponse.password)
                             binding.phoneEt.setText(userResponse.phone)
                             binding.emergencyPhoneEt.setText(userResponse.emergencyPhone)
                             // Formatear la fecha antes de asignarla al EditText
@@ -257,7 +263,6 @@ class ProfileEditActivity : AppCompatActivity() {
     private var name = ""
     private var lastname = ""
     private var email = ""
-    private var password=""
     private var telefono = ""
     private var emergencyPhone = ""
     private var direction = ""
@@ -269,7 +274,6 @@ class ProfileEditActivity : AppCompatActivity() {
         name = binding.nameEt.text.toString().trim()
         lastname = binding.lastnameEt.text.toString().trim()
         email = binding.emailEt.text.toString().trim()
-        password = binding.passwordEt.text.toString().trim()
         telefono = binding.phoneEt.text.toString().trim()
         emergencyPhone = binding.emergencyPhoneEt.text.toString().trim()
         direction = binding.directionEt.text.toString().trim()
@@ -300,12 +304,11 @@ class ProfileEditActivity : AppCompatActivity() {
 
         val call = when {
             imageUri != null -> {
-                updateRequest = EditProfileWithImageRequest(name, lastname, password, email, telefono, emergencyPhone, direction, gender, nationality, image)
+                updateRequest = EditProfileWithImageRequest(name, lastname,email, telefono, emergencyPhone, direction, gender, nationality, image)
                 RetrofitClient.instance.editProfileWithImage("Bearer $token", updateRequest as EditProfileWithImageRequest)
             }
             else -> {
-
-                updateRequest = EditProfileRequest(name, lastname, password, email, telefono, emergencyPhone, direction, gender, nationality)
+                updateRequest = EditProfileRequest(name, lastname, email, telefono, emergencyPhone, direction, gender, nationality)
                 RetrofitClient.instance.editProfile("Bearer $token", updateRequest as EditProfileRequest)
             }
         }
@@ -381,7 +384,6 @@ class ProfileEditActivity : AppCompatActivity() {
                 "name" -> "${error.path[0]}: ${error.message}"
                 "lastname" -> "${error.path[0]}: ${error.message}"
                 "email" -> "${error.path[0]}: ${error.message}"
-                "password" -> "${error.path[0]}: ${error.message}"
                 "phone" -> "${error.path[0]}: ${error.message}"
                 "emergencyPhone" -> "${error.path[0]}: ${error.message}"
                 "direction" -> "${error.path[0]}: ${error.message}"

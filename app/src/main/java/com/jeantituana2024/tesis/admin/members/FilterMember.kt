@@ -27,7 +27,10 @@ class FilterMember: Filter {
 
             for(i in 0 until filterList.size){
                 if(filterList[i].user.name.uppercase().contains(constraint) ||
-                    filterList[i].user.lastname.uppercase().contains(constraint)){
+                    filterList[i].user.lastname.uppercase().contains(constraint) ||
+                    filterList[i].email.uppercase().contains(constraint) ||
+                    filterList[i].plan.name.uppercase().contains(constraint) ||
+                    filterList[i].inscriptionDate.uppercase().contains(constraint)){
                     filteredModels.add(filterList[i])
                 }
             }

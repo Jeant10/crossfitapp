@@ -55,7 +55,7 @@ class UserEditActivity : AppCompatActivity() {
     private val CAMERA_REQUEST_CODE = 0
     private var selectedDate: Calendar = Calendar.getInstance() // Variable para almacenar la fecha seleccionada
 
-
+    private var identification = ""
     private var name = ""
     private var lastname = ""
     private var email = ""
@@ -65,6 +65,7 @@ class UserEditActivity : AppCompatActivity() {
     private var direction = ""
     private var gender = ""
     private var rol=""
+    private var dateBorn = ""
     private var userUid=""
     private var nationality = ""
     private var imageUri: Uri?=null
@@ -107,6 +108,10 @@ class UserEditActivity : AppCompatActivity() {
             checkPermission()
         }
 
+        binding.bornDateEt.setOnClickListener {
+            showDatePickerDialog()
+        }
+
         binding.updateBtn.setOnClickListener {
             validateData()
         }
@@ -137,14 +142,13 @@ class UserEditActivity : AppCompatActivity() {
                             binding.nameEt.setText(userResponse.name)
                             binding.lastnameEt.setText(userResponse.lastname)
                             binding.emailEt.setText(userResponse.email)
-                            binding.passwordEt.setText(userResponse.password)
                             binding.phoneEt.setText(userResponse.phone)
                             binding.emergencyPhoneEt.setText(userResponse.emergencyPhone)
                             // Formatear la fecha antes de asignarla al EditText
                             val formattedDate = formatDateString(userResponse.bornDate)
                             binding.bornDateEt.setText(formattedDate)
-                            // Actualiza la variable selectedDate
-                            updateSelectedDate(formattedDate)
+
+//                            updateSelectedDate(formattedDate)
 
                             binding.directionEt.setText(userResponse.direction)
 
@@ -230,6 +234,37 @@ class UserEditActivity : AppCompatActivity() {
         }
     }
 
+    // Método para actualizar la variable selectedDate
+    private fun updateSelectedDate(dateString: String) {
+        try {
+            val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val date = format.parse(dateString)
+            selectedDate.time = date
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun showDatePickerDialog() {
+        val year = selectedDate.get(Calendar.YEAR)
+        val month = selectedDate.get(Calendar.MONTH)
+        val day = selectedDate.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val formattedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
+                binding.bornDateEt.setText(formattedDate)
+
+                // Actualiza selectedDate con la nueva fecha seleccionada
+                selectedDate.set(selectedYear, selectedMonth, selectedDay)
+            },
+            year, month, day
+        )
+        datePickerDialog.show()
+    }
+
+
     // Función para mostrar una alerta de sesión expirada y redirigir al LoginActivity
     private fun showSessionExpiredAlert() {
         val builder = AlertDialog.Builder(this)
@@ -244,16 +279,6 @@ class UserEditActivity : AppCompatActivity() {
         }
         builder.setCancelable(false) // Prevenir el cierre del diálogo usando el botón de atrás
         builder.show()
-    }
-
-    private fun updateSelectedDate(dateString: String) {
-        try {
-            val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val date = format.parse(dateString)
-            selectedDate.time = date
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
     }
 
 
@@ -300,12 +325,13 @@ class UserEditActivity : AppCompatActivity() {
 
         val errorMessages = errors.joinToString(separator = "\n") { error ->
             when (error.path[0]) {
+                "identification" -> "${error.path[0]}: ${error.message}"
                 "image" -> "${error.path[0]}: ${error.message}"
                 "name" -> "${error.path[0]}: ${error.message}"
                 "lastname" -> "${error.path[0]}: ${error.message}"
                 "email" -> "${error.path[0]}: ${error.message}"
-                "password" -> "${error.path[0]}: ${error.message}"
                 "phone" -> "${error.path[0]}: ${error.message}"
+//                "born_date" -> "${error.message}"
                 "emergencyPhone" -> "${error.path[0]}: ${error.message}"
                 "direction" -> "${error.path[0]}: ${error.message}"
                 "gender" -> "${error.path[0]}: ${error.message}"
@@ -320,12 +346,13 @@ class UserEditActivity : AppCompatActivity() {
 
     private fun validateData() {
 
+        identification = binding.identificationEt.text.toString().trim()
         name = binding.nameEt.text.toString().trim()
         lastname = binding.lastnameEt.text.toString().trim()
         email = binding.emailEt.text.toString().trim()
-        password = binding.passwordEt.text.toString().trim()
         telefono = binding.phoneEt.text.toString().trim()
         emergencyPhone = binding.emergencyPhoneEt.text.toString().trim()
+        dateBorn = binding.bornDateEt.text.toString().trim()
         direction = binding.directionEt.text.toString().trim()
         gender = getSelectedGender()
         nationality = binding.spinner.selectedItem.toString().trim()
@@ -485,13 +512,13 @@ class UserEditActivity : AppCompatActivity() {
 
             val call = when {
                 imageUri != null -> {
-                    updateRequest = EditUserWithImageRequest(name, lastname, password, email, telefono, emergencyPhone, direction,
+                    updateRequest = EditUserWithImageRequest(identification, name, lastname, email, telefono, emergencyPhone, direction,
                     gender, nationality, rol, image)
                     RetrofitClient.instance.editUserWithImage("Bearer $token", userUid, updateRequest)
                 }
                 else -> {
 
-                    updateRequest = EditUserRequest(name, lastname, password, email, telefono, emergencyPhone, direction,
+                    updateRequest = EditUserRequest(identification, name, lastname, email, telefono, emergencyPhone, direction,
                         gender, nationality, rol)
                     RetrofitClient.instance.editUser("Bearer $token", userUid, updateRequest)
                 }

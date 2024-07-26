@@ -79,6 +79,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.2")
     implementation("androidx.media3:media3-common:1.3.1")
 
+    implementation("com.github.barteksc:android-pdf-viewer:3.2.0-beta.1")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation ("org.robolectric:robolectric:4.13")

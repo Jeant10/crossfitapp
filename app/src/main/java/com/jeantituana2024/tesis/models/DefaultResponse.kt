@@ -16,9 +16,17 @@ data class GenericResponse(
 
 //MODELS AUTH
 data class RegisterRequest(
+    val identification: String,
     val name: String,
+    val lastname: String,
+    val password: String,
     val email: String,
-    val password: String
+    val phone: String,
+    val emergency_phone: String,
+    val born_date: String,
+    val direction: String,
+    val gender: String,
+    val nacionality: String
 )
 data class CreateUser(
     val name: String,
@@ -44,7 +52,6 @@ data class ResetPasswordRequest(
 data class EditProfileWithImageRequest(
     val name: String,
     val lastname: String,
-    val password: String,
     val email: String,
     val phone: String,
     val emergencyPhone: String,
@@ -57,7 +64,6 @@ data class EditProfileWithImageRequest(
 data class EditProfileRequest(
     val name: String,
     val lastname: String,
-    val password: String,
     val email: String,
     val phone: String,
     val emergencyPhone: String,
@@ -103,9 +109,9 @@ data class UserRegister (
     val email: String
 )
 data class EditUserRequest(
+    val identification: String,
     val name: String,
     val lastname: String,
-    val password: String,
     val email: String,
     val phone: String,
     val emergencyPhone: String,
@@ -116,9 +122,9 @@ data class EditUserRequest(
 )
 
 data class EditUserWithImageRequest(
+    val identification: String,
     val name: String,
     val lastname: String,
-    val password: String,
     val email: String,
     val phone: String,
     val emergencyPhone: String,
@@ -313,6 +319,12 @@ data class Payment(
 data class PaymentRequest(
     val date: String,
     val payment_type: String
+)
+
+data class PaymentRequestWithPdf(
+    val date: String,
+    val payment_type: String,
+    val pdfUrl: String?
 )
 
 // Modelo para la respuesta de creación de pago

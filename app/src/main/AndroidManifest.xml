@@ -19,6 +19,12 @@
         tools:replace="android:usesCleartextTraffic"
         tools:targetApi="31">
         <activity
+            android:name=".auth.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".payment.PdfViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".coach.DashboardCoachActivity"
             android:exported="false" />
         <activity

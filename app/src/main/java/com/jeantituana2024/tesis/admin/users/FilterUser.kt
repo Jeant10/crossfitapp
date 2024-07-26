@@ -26,7 +26,8 @@ class FilterUser: Filter {
 
             for (i in 0 until filterList.size){
                 if(filterList[i].name.uppercase().contains(constraint)||
-                    filterList[i].lastname.uppercase().contains(constraint)){
+                    filterList[i].lastname.uppercase().contains(constraint) ||
+                    filterList[i].email.uppercase().contains(constraint)){
                     filteredModels.add(filterList[i])
                 }
             }

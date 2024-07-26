@@ -5,9 +5,16 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts
+import com.google.android.gms.tasks.Task
+import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jeantituana2024.tesis.R
@@ -17,6 +24,7 @@ import com.jeantituana2024.tesis.databinding.ActivityPayEditBinding
 import com.jeantituana2024.tesis.models.ErrorDetail
 import com.jeantituana2024.tesis.models.ErrorResponse
 import com.jeantituana2024.tesis.models.PaymentRequest
+import com.jeantituana2024.tesis.models.PaymentRequestWithPdf
 import com.jeantituana2024.tesis.models.PaymentResponse
 import com.jeantituana2024.tesis.models.SingleErrorResponse
 import com.jeantituana2024.tesis.storage.TokenPreferences
@@ -33,10 +41,11 @@ class PayEditActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPayEditBinding
     private lateinit var progressDialog: ProgressDialog
     private lateinit var tokenPreferences: TokenPreferences
-
+    private var pdfUri: Uri?= null
     private var selectedDate: Calendar = Calendar.getInstance() // Variable para almacenar la fecha seleccionada
     private var memberId = ""
     private var payId = ""
+    private var pdfUrl = ""
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +72,7 @@ class PayEditActivity : AppCompatActivity() {
         // Habilitar el botón de regreso en el Toolbar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        
+
         // Configurar el comportamiento del botón de regreso
         binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
@@ -71,6 +80,20 @@ class PayEditActivity : AppCompatActivity() {
 
         binding.dateEt.setOnClickListener {
             showDatePickerDialog()
+        }
+
+        binding.pdfEt.setOnClickListener {
+            pdfPickIntent()
+        }
+
+        binding.viewPdfBtn.setOnClickListener {
+            if(pdfUrl.isEmpty()){
+                showToast("No se encontro el comprobante")
+            }else{
+                val intent = Intent(this, PdfViewActivity::class.java)
+                intent.putExtra("pdfUrl",pdfUrl)
+                startActivity(intent)
+            }
         }
 
         binding.updateBtn.setOnClickListener {
@@ -103,6 +126,7 @@ class PayEditActivity : AppCompatActivity() {
                             val formattedDate = formatDateString(payResponse.date)
                             binding.dateEt.setText(formattedDate)
 
+                            pdfUrl = payResponse.pdfUrl?.toString() ?: ""
                             // Actualiza la variable selectedDate
                             updateSelectedDate(formattedDate)
                             // Configurar nacionalidad
@@ -149,10 +173,15 @@ class PayEditActivity : AppCompatActivity() {
         date = binding.dateEt.text.toString().trim()
         typePay = binding.spinner.selectedItem.toString().trim()
 
-        updatePay()
+        if(pdfUri==null){
+            updatePay("")
+        }
+        else{
+            uploadPdfToStorage()
+        }
     }
 
-    private fun updatePay() {
+    private fun updatePay(pdfUrl: String) {
         progressDialog.setMessage("Actualizando pago...")
         progressDialog.show()
 
@@ -160,9 +189,18 @@ class PayEditActivity : AppCompatActivity() {
 
         if (token != null) {
 
-            val editRequest = PaymentRequest(date,typePay)
+            val editRequest: Any
 
-            val call = RetrofitClient.instance.updatePayment("Bearer $token",memberId, payId, editRequest)
+            val call = when {
+                pdfUri != null -> {
+                    editRequest = PaymentRequestWithPdf(date,typePay,pdfUrl)
+                    RetrofitClient.instance.updatePaymentWithPdf("Bearer $token", memberId, payId, editRequest as PaymentRequestWithPdf)
+                }
+                else -> {
+                    editRequest = PaymentRequest(date,typePay)
+                    RetrofitClient.instance.updatePayment("Bearer $token", memberId, payId, editRequest as PaymentRequest)
+                }
+            }
 
             call.enqueue(object: Callback<PaymentResponse>{
                 override fun onResponse(
@@ -227,6 +265,32 @@ class PayEditActivity : AppCompatActivity() {
         }
     }
 
+    private fun uploadPdfToStorage(){
+
+        progressDialog.setMessage("Subiendo pdf..")
+        progressDialog.show()
+
+        val timestamp = System.currentTimeMillis()
+
+        val filePathAndName = "Pays/$timestamp.pdf"
+
+        val storageReference = FirebaseStorage.getInstance().getReference(filePathAndName)
+        storageReference.putFile(pdfUri!!)
+            .addOnSuccessListener {taskSnapshot->
+                val uriTask: Task<Uri> = taskSnapshot.storage.downloadUrl
+                while (!uriTask.isSuccessful);
+
+                val uploadedPdfUrl = "${uriTask.result}"
+
+                updatePay(uploadedPdfUrl)
+
+            }
+            .addOnFailureListener{e->
+                progressDialog.dismiss()
+                showToast("Fallido al subir el pdf por: ${e.message}")
+            }
+    }
+
     // Método para actualizar la variable selectedDate
     private fun updateSelectedDate(dateString: String) {
         try {
@@ -236,6 +300,42 @@ class PayEditActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    private fun pdfPickIntent(){
+
+        val intent = Intent()
+        intent.type = "application/pdf"
+        intent.action = Intent.ACTION_GET_CONTENT
+        pdfActivityResultLauncher.launch(intent)
+    }
+
+    private val pdfActivityResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        ActivityResultCallback<ActivityResult>{ result->
+            if(result.resultCode == RESULT_OK){
+                pdfUri = result.data!!.data
+                val pdfFileName = pdfUri?.let { getFileNameFromUri(it) }
+                binding.pdfEt.setText(pdfFileName)
+            }
+            else{
+                showToast("Cancelled")
+            }
+        }
+    )
+
+    private fun getFileNameFromUri(uri: Uri): String {
+        var fileName = ""
+        val cursor = contentResolver.query(uri, null, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                if (nameIndex != -1) {
+                    fileName = it.getString(nameIndex)
+                }
+            }
+        }
+        return fileName
     }
 
     private fun formatDateString(dateString: String): String {

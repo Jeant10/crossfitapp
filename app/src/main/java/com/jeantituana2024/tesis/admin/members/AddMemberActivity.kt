@@ -63,6 +63,7 @@ class AddMemberActivity : AppCompatActivity() {
         loadPlans()
 
         loadUsers()
+
         // Configurar el Toolbar desde el binding
         setSupportActionBar(binding.toolbar)
 
@@ -175,10 +176,10 @@ class AddMemberActivity : AppCompatActivity() {
 
     private fun setupUserSpinner() {
         // Obtener los nombres de los miembros para mostrar en el Spinner
-        val userEmails = userArrayList.map { it.email }
+        val userNames = userArrayList.map { getString(R.string.member_name, it.name, it.lastname) }
 
         // Configurar el Adapter para el Spinner
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, userEmails)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, userNames)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.userSpinner.adapter = adapter
 

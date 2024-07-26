@@ -26,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
 
     private lateinit var progressDialog: ProgressDialog
-
+    private var selectedDate: Calendar = Calendar.getInstance() // Variable para almacenar la fecha seleccionada
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -87,7 +87,7 @@ class RegisterActivity : AppCompatActivity() {
         progressDialog.setMessage("Creando Cuenta...")
         progressDialog.show()
 
-        val userData = RegisterRequest(name, email, password)
+        val userData = RegisterRequest(identification, name, lastname, password, email, telefono,emergencyPhone,dateBorn,direction,gender,nationality)
         val call = RetrofitClient.instance.register(userData)
 
         call.enqueue(object : Callback<RegisterResponse> {
@@ -169,16 +169,18 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun showDatePickerDialog() {
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val year = selectedDate.get(Calendar.YEAR)
+        val month = selectedDate.get(Calendar.MONTH)
+        val day = selectedDate.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(
             this,
             { _, selectedYear, selectedMonth, selectedDay ->
                 val formattedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
                 binding.bornDateEt.setText(formattedDate)
+
+                // Actualiza selectedDate con la nueva fecha seleccionada
+                selectedDate.set(selectedYear, selectedMonth, selectedDay)
             },
             year, month, day
         )

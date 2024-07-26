@@ -53,7 +53,7 @@ class AdapterPay: RecyclerView.Adapter<AdapterPay.HolderPay>, Filterable {
 
     inner class HolderPay(itemView: View): RecyclerView.ViewHolder(itemView){
 
-        var tvEmail: TextView = binding.tvEmail
+        var tvName: TextView = binding.tvName
         var tvDate: TextView = binding.tvDate
         var tvPlan: TextView = binding.tvPlan
         var tvPay: TextView = binding.tvPay
@@ -85,13 +85,14 @@ class AdapterPay: RecyclerView.Adapter<AdapterPay.HolderPay>, Filterable {
         val model = payArrayList[position]
         val id = model.id.toString()
         val memberId = model.memberId.toString()
-        val email = model.Member.email
+        val name = model.Member.user.name
+        val lastname = model.Member.user.lastname
         val date = model.date
         val plan = model.Member.plan.name
         val pay = model.payment_type
         val status = model.status
 
-        holder.tvEmail.text = email
+        holder.tvName.text = context.getString(R.string.member_name, name, lastname)
         // Formatear la fecha antes de asignarla al EditText
         val formattedDate = formatDateString(date)
         holder.tvDate.text = formattedDate

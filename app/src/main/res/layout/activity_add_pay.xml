@@ -96,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dateTil"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/memberLabel"
@@ -111,7 +111,7 @@
                     android:id="@+id/memberSpinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     android:layout_below="@id/memberLabel"
                     android:padding="5dp" />
 
@@ -147,18 +147,44 @@
 
             </RelativeLayout>
 
-            <!--Register Button-->
+            <!-- Comprobante -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/pdfTil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/spinnerContainer"
+                app:hintEnabled="false">
+
+                <EditText
+                    android:id="@+id/pdfEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_edittext01"
+                    android:drawableStart="@drawable/ic_file_gray"
+                    android:drawablePadding="10dp"
+                    android:hint="Comprobante"
+                    android:inputType="text"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray01"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Register Button -->
             <Button
                 android:id="@+id/submitBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/spinnerContainer"
+                android:layout_below="@id/pdfTil"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/shape_button01"
                 android:text="Crear"
-                android:textColor="@color/white">
-
-            </Button>
+                android:textColor="@color/white"/>
 
         </RelativeLayout>
 

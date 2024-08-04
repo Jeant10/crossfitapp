@@ -48,9 +48,4 @@ El Link de la store se encuentra 👉 <a href="https://crossfit-app.uptodown.com
 <li>Configurar aplicacion para tu dispositivo fisico o movil</b></li>
 <li>Conectar la app a firebase storage</b></li>
 <li>Abrir la aplicacion</b></li>
-<li>Colocar las siguientes credenciales: 
-<ul>
-<li>Email: admin@admin.com</li>
-<li>Password: 123456</li>
-</ul>
-</b></li>
+</ol>

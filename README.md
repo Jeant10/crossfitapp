@@ -27,6 +27,7 @@ El Link del video se encuentra 👉 <a href="https://www.youtube.com/watch?v=IKk
 
 El Link de la store se encuentra 👉 <a href="https://crossfit-app.uptodown.com/android">aqui</a>
 
+El link de la apk se encuentra 👉 <a href="https://drive.google.com/drive/folders/1wmZTonmk_Fel7wBkonmPF2u0EtNisBh7?usp=drive_link">aqui</a>
 
 ## Screenshots :
 

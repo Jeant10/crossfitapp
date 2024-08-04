@@ -18,7 +18,6 @@ import com.google.gson.reflect.TypeToken
 import com.jeantituana2024.tesis.api.RetrofitClient
 import com.jeantituana2024.tesis.auth.LoginActivity
 import com.jeantituana2024.tesis.databinding.ActivityAddUserBinding
-import com.jeantituana2024.tesis.models.CreateUser
 import com.jeantituana2024.tesis.models.ErrorDetail
 import com.jeantituana2024.tesis.models.ErrorResponse
 import com.jeantituana2024.tesis.models.Plan
@@ -131,7 +130,6 @@ class AddUserActivity : AppCompatActivity() {
 
                     registerResponse?.let {
                         if (it.success == "Create User Successfully") {
-                            // Redirigir a LoginActivity
                             showToast("Registro exitoso")
                             setResult(Activity.RESULT_OK)
                         }
@@ -212,8 +210,8 @@ class AddUserActivity : AppCompatActivity() {
                 "email" -> "${error.path[0]}: ${error.message}"
                 "password" -> "${error.path[0]}: ${error.message}"
                 "phone" -> "${error.path[0]}: ${error.message}"
-                "emergency_phone" -> "${error.path[0]}: ${error.message}"
-                "born_date" -> "${error.path[0]}: ${error.message}"
+                "emergencyPhone" -> "${error.path[0]}: ${error.message}"
+                "borndate" -> "${error.path[0]}: ${error.message}"
                 "direction" -> "${error.path[0]}: ${error.message}"
                 "gender" -> "${error.path[0]}: ${error.message}"
                 "role" -> "${error.path[0]}: ${error.message}"

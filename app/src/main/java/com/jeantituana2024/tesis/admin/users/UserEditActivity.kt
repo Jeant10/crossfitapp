@@ -331,7 +331,7 @@ class UserEditActivity : AppCompatActivity() {
                 "lastname" -> "${error.path[0]}: ${error.message}"
                 "email" -> "${error.path[0]}: ${error.message}"
                 "phone" -> "${error.path[0]}: ${error.message}"
-//                "born_date" -> "${error.message}"
+//                "bornDate" -> "${error.message}"
                 "emergencyPhone" -> "${error.path[0]}: ${error.message}"
                 "direction" -> "${error.path[0]}: ${error.message}"
                 "gender" -> "${error.path[0]}: ${error.message}"
@@ -536,7 +536,7 @@ class UserEditActivity : AppCompatActivity() {
 
                         if (updateResponse?.success != null) {
                             // Mostrar mensaje de éxito
-                            showToast("Registro Exitoso. ${updateResponse.message ?:""}")
+                            showToast("Usuario Actualizado. ${updateResponse.message ?:""}")
                             setResult(Activity.RESULT_OK)
                         } else {
                             showToast("Error desconocido")

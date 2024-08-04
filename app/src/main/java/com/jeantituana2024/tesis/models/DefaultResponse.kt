@@ -22,17 +22,13 @@ data class RegisterRequest(
     val password: String,
     val email: String,
     val phone: String,
-    val emergency_phone: String,
-    val born_date: String,
+    val emergencyPhone: String,
+    val bornDate: String,
     val direction: String,
     val gender: String,
     val nacionality: String
 )
-data class CreateUser(
-    val name: String,
-    val email: String,
-    val password: String
-)
+
 data class LoginRequest(
     val email: String,
     val password: String
@@ -81,6 +77,12 @@ data class EditProfileResponse(
     val success: String,
     val user: UserModel
 )
+
+data class ChangePasswordRequest(
+    val password: String,
+    val newPassword: String
+)
+
 
 //MODELS ERROR
 data class ErrorDetail(
@@ -150,8 +152,8 @@ data class UserRequest(
     val password: String,
     val email: String,
     val phone: String,
-    val emergency_phone: String,
-    val born_date: String,
+    val emergencyPhone: String,
+    val bornDate: String,
     val direction: String,
     val gender: String,
     val role: String,

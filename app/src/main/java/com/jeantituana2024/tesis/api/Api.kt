@@ -9,8 +9,8 @@ import com.jeantituana2024.tesis.models.AttendanceResponse
 import com.jeantituana2024.tesis.models.AttendancesByGenderResponse
 import com.jeantituana2024.tesis.models.AttendancesCoachResponse
 import com.jeantituana2024.tesis.models.AttendancesResponse
+import com.jeantituana2024.tesis.models.ChangePasswordRequest
 import com.jeantituana2024.tesis.models.CheckSessionResponse
-import com.jeantituana2024.tesis.models.CreateUser
 import com.jeantituana2024.tesis.models.DailyAttendancesResponse
 import com.jeantituana2024.tesis.models.EarningsByPlanResponse
 import com.jeantituana2024.tesis.models.EarningsResponse
@@ -385,4 +385,9 @@ interface Api {
         @Header("Authorization") token: String
     ): Call<PaysInfoResponse>
 
+    @PUT("change_password")
+    fun changePassword(
+        @Header("Authorization") token: String,
+        @Body changePasswordRequest: ChangePasswordRequest
+    ): Call<GenericResponse>
 }

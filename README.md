@@ -23,7 +23,7 @@ La aplicación móvil propuesta es para un centro de CrossFit en la ciudad de Qu
 
 ## Links :
 
-El Link del video se encuentra 👉 <a href="https://epnecuador-my.sharepoint.com/:v:/g/personal/jean_tituana_epn_edu_ec/EQ35tteRNSlNqxRgbaw_GmABS2DhQeRyc5FskW44Bvv1SA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=PrN8R5">aqui</a>
+El Link del video en drive se encuentra 👉 <a href="https://epnecuador-my.sharepoint.com/:v:/g/personal/jean_tituana_epn_edu_ec/EQ35tteRNSlNqxRgbaw_GmABS2DhQeRyc5FskW44Bvv1SA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=PrN8R5">aqui</a>
 
 El Link de la store se encuentra 👉 <a href="https://crossfit-app.uptodown.com/android">aqui</a>
 
